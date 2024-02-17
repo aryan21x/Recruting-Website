@@ -29,10 +29,25 @@ body {
     color: darkgoldenrod;
 }
 
-.nav{
-    color: navy;
-    text-decoration: none;
+.nav-link{
+    position: relative  !important;
+    color: navy !important;
 }
-.nav:hover{
-    color: green;
+
+.nav-link::before {
+    content: '' !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 2px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    background-color: navy !important;
+    visibility: hidden !important;
+    transform: scaleX(0) !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.nav-link:hover::before {
+    visibility: visible !important;
+    transform: scaleX(0.7) !important;
 }
