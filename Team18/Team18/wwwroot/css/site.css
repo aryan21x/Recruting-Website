@@ -20,3 +20,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.nav {
+    background-color: #fff;
+}
+
+.gold{
+    color: darkgoldenrod;
+}
+
+.nav{
+    color: navy;
+    text-decoration: none;
+}
+.nav:hover{
+    color: green;
+}
