@@ -3,6 +3,8 @@
 ## Team Members
 -  Aryan Raval, Kaleb Preister
 
+![alt text](<ER (2)-1.jpg>)
+
 ### Product Vision Statement:
 
 For recruiters who need to find potential employees that fit the job requirements and students looking for an internships or jobs to boost their resume or find a career. EliteRecruit is a recruitment site that gives students an outlet to make their accomplishments and desires known to recruiters and gives recruiters the ability to find the perfect fit for open positions. Unlike Handshake, EliteRecruit will give students the ability to show off their accomplishments and projects and encourages recruiters to reach out to students about relevant projects and work experience. The goal is for recruiters to make a connection with students so students can show off more than basic descriptions and so recruiters can learn more about the student before they make a final decision.
