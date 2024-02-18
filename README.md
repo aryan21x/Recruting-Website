@@ -3,7 +3,7 @@
 ## Team Members
 -  Aryan Raval, Kaleb Preister
 
-![logo](EliteRecruitWhite.jpg "EliteRecruit")
+![logo](EliteRecruitWhite.jpg "EliteRecruit" width="200" height="200")
 
 ### Product Vision Statement:
 
