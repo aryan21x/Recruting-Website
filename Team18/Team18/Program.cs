@@ -1,9 +1,26 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Team18.Data;
+using Team18.Models;
+using Team18.Data.SeedData;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Team18Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Team18Context") ?? throw new InvalidOperationException("Connection string 'Team18Context' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedDatabase.Initialize(services);
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
