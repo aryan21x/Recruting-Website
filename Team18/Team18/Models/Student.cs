@@ -3,45 +3,43 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Team18.Models
 {
-    public class Recruit
+    public class Student
     {
         public int Id { get; set; }
 
         [StringLength(30, MinimumLength = 2)]
         [Required]
-        public string? fName { get; set; }
+        public string? FirstName { get; set; }
 
         [StringLength(30, MinimumLength = 2)]
         [Required]
-        public string? lName { get; set; }
+        public string? LastName { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? school { get; set; }
+        public string? School { get; set; }
 
         [Range(1, 4)]
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "decimal(1, 2)")]
+        [Column(TypeName = "decimal(3, 2)")]
         public decimal GPA { get; set; }
 
         [StringLength(30, MinimumLength = 3)]
         [Required]
-        public string? major { get; set; }
+        public string? Major { get; set; }
 
         [StringLength(30, MinimumLength = 3)]
-        public string? minor { get; set; }
+        public string? Minor { get; set; }
 
-        [StringLength(20, MinimumLength = 6)]
+        [Range(1, 4)]
         [Required]
-        public string? schoolYear { get; set; }
-
-        //Work
+        public string? SchoolYear { get; set; }
 
         [StringLength(80, MinimumLength = 10)]
-        public string? email { get; set; }
+        [EmailAddress]
+        public string? Email { get; set; }
 
         [RegularExpression(@"^[0-9""'\s-]*$")]
         [StringLength(15)]
-        public string? phoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }
