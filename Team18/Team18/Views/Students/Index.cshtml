@@ -4,102 +4,74 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.School)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GPA)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Major)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SchoolYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GPA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Major)
-            </td>
-                <td>
-                    @{
-                        string schoolYearText = "";
-                        if (int.TryParse(item.SchoolYear, out int year))
-                        {
-                            switch (year)
-                            {
-                                case 1:
-                                    schoolYearText = "Freshman";
-                                    break;
-                                case 2:
-                                    schoolYearText = "Sophomore";
-                                    break;
-                                case 3:
-                                    schoolYearText = "Junior";
-                                    break;
-                                case 4:
-                                    schoolYearText = "Senior";
-                                    break;
-                                default:
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>School</th>
+                    <th>GPA</th>
+                    <th>Major</th>
+                    <th>School Year</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.School)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GPA)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Major)</td>
+                        <td>
+                            @{
+                                string schoolYearText = "";
+                                if (int.TryParse(item.SchoolYear, out int year))
+                                {
+                                    switch (year)
+                                    {
+                                        case 1:
+                                            schoolYearText = "Freshman";
+                                            break;
+                                        case 2:
+                                            schoolYearText = "Sophomore";
+                                            break;
+                                        case 3:
+                                            schoolYearText = "Junior";
+                                            break;
+                                        case 4:
+                                            schoolYearText = "Senior";
+                                            break;
+                                        default:
+                                            schoolYearText = "Unknown";
+                                            break;
+                                    }
+                                }
+                                else
+                                {
                                     schoolYearText = "Unknown";
-                                    break;
+                                }
                             }
-                        }
-                        else
-                        {
-                            schoolYearText = "Unknown";
-                        }
-                    }
-                    @schoolYearText
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                            @schoolYearText
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-sm btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
