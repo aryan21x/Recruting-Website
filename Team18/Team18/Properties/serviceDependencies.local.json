@@ -2,8 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql.local",
-      //"connectionId": "ConnectionStrings:Team18ContextConnection",
-      "connectionId": "ConnectionStrings:Team18Context"
+      "connectionId": "ConnectionStrings:Team18ContextConnection"
     }
   }
 }

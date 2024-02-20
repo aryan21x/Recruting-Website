@@ -274,54 +274,6 @@ namespace Team18.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-
-            modelBuilder.Entity("Team18.Models.Student", b =>
-            {
-                b.Property<string>("Email")
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                b.Property<string>("FirstName")
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
-
-                b.Property<decimal>("GPA")
-                    .HasColumnType("decimal(3, 2)");
-
-                b.Property<string>("LastName")
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
-
-                b.Property<string>("Major")
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
-
-                b.Property<string>("Minor")
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
-
-                b.Property<string>("PhoneNumber")
-                    .HasMaxLength(15)
-                    .HasColumnType("nvarchar(15)");
-
-                b.Property<string>("School")
-                    .IsRequired()
-                    .HasMaxLength(60)
-                    .HasColumnType("nvarchar(60)");
-
-                b.Property<string>("SchoolYear")
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnType("nvarchar(20)");
-
-                b.HasKey("Id");
-
-                b.ToTable("Student");
-
-            });
 #pragma warning restore 612, 618
         }
     }
