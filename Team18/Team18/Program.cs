@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Team18.Data;
 using Team18.Models;
 using Team18.Data.SeedData;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Team18Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Team18Context") ?? throw new InvalidOperationException("Connection string 'Team18Context' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Team18Context>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -40,5 +43,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
