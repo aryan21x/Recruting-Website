@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Team18.Data;
 using Team18.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Team18.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
         private readonly Team18Context _context;
