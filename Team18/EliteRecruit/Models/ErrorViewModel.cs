@@ -1,4 +1,4 @@
-namespace Team18.Models
+namespace EliteRecruit.Models
 {
     public class ErrorViewModel
     {

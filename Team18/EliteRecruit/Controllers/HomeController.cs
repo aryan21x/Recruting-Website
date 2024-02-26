@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Team18.Models;
+using EliteRecruit.Models;
 
-namespace Team18.Controllers
+namespace EliteRecruit.Controllers
 {
     public class HomeController : Controller
     {

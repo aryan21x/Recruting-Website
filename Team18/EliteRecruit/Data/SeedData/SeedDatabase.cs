@@ -1,17 +1,17 @@
-﻿using Team18.Models;
+﻿using EliteRecruit.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Team18.Data.SeedData
+namespace EliteRecruit.Data.SeedData
 {
     public class SeedDatabase
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using var context = new Team18Context(serviceProvider.GetRequiredService<DbContextOptions<Team18Context>>());
+            using var context = new EliteRecruitContext(serviceProvider.GetRequiredService<DbContextOptions<EliteRecruitContext>>());
 
             // Look for any Students.
             if (context.Student.Any())
@@ -20,7 +20,7 @@ namespace Team18.Data.SeedData
             }
 
             var assembly = Assembly.GetExecutingAssembly();
-            string resourceName = "Team18.Data.SeedData.seedData.csv";
+            string resourceName = "EliteRecruit.Data.SeedData.seedData.csv";
 
             // Retrieve the resource stream
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
