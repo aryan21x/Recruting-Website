@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Team18.Models
+namespace EliteRecruit.Models
 {
     public class Student
     {

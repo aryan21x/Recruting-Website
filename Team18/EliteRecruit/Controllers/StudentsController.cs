@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Team18.Data;
-using Team18.Models;
+using EliteRecruit.Data;
+using EliteRecruit.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Team18.Controllers
+namespace EliteRecruit.Controllers
 {
     [Authorize]
     public class StudentsController : Controller
     {
-        private readonly Team18Context _context;
+        private readonly EliteRecruitContext _context;
 
-        public StudentsController(Team18Context context)
+        public StudentsController(EliteRecruitContext context)
         {
             _context = context;
         }
