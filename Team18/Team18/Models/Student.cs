@@ -7,10 +7,12 @@ namespace Team18.Models
     {
         public int Id { get; set; }
 
+        [Display(Name = "First Name")]
         [StringLength(30, MinimumLength = 2)]
         [Required]
         public string? FirstName { get; set; }
 
+        [Display(Name = "Last Name")]
         [StringLength(30, MinimumLength = 2)]
         [Required]
         public string? LastName { get; set; }
@@ -30,6 +32,7 @@ namespace Team18.Models
         [StringLength(30, MinimumLength = 3)]
         public string? Minor { get; set; }
 
+        [Display(Name = "School Year")]
         [Range(1, 4)]
         [Required]
         public string? SchoolYear { get; set; }
@@ -38,6 +41,7 @@ namespace Team18.Models
         [EmailAddress]
         public string? Email { get; set; }
 
+        [Display(Name = "Phone Number")]
         [RegularExpression(@"^[0-9""'\s-]*$")]
         [StringLength(15)]
         public string? PhoneNumber { get; set; }
