@@ -29,12 +29,16 @@ body {
     color: darkgoldenrod;
 }
 
-.nav-link{
-    position: relative  !important;
+.nav-link2 {
+    position: relative !important;
     color: navy !important;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    border: none;
 }
 
-.nav-link::before {
+.nav-link2::before {
     content: '' !important;
     position: absolute !important;
     width: 100% !important;
@@ -47,7 +51,27 @@ body {
     transition: all 0.3s ease-in-out !important;
 }
 
-.nav-link:hover::before {
+.nav-link2:hover::before {
     visibility: visible !important;
     transform: scaleX(0.7) !important;
+}
+
+
+.custom {
+    color: navy;
+    background-color: transparent !important;
+    border-color: none !important;
+}
+.custom:hover {
+    background-color: navy !important;
+    color: white !important;
+}
+
+.btn.custom:focus,
+.btn.custom:active {
+    box-shadow: none;
+}
+
+#students-cards {
+    display: none; 
 }
