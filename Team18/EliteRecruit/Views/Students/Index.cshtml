@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<EliteRecruit.Models.Student>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Students";
 }
 
+
 <div class="container mt-5">
-    <h1>@ViewData["Title"]</h1>
+    <h1 style="color: navy;">@ViewData["Title"]</h1>
 
-    <p>
-        <a class="btn btn-primary" asp-action="Create">Create New</a>
-    </p>
+    <div class="btn-group mb-3" role="group" aria-label="Switch view">
+        <a  class="btn custom" id="table-view">Table View</a>
+        <a  class="btn custom" id="card-view">Card View</a>
+        <a  class="btn custom" asp-action="Create">Create New</a>
+    </div>
 
-    <div class="table-responsive">
+    <div id="students-table" class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -65,13 +68,85 @@
                             @schoolYearText
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-sm btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+    <div id="students-cards">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h5>
+                            <p class="card-text">School: @Html.DisplayFor(modelItem => item.School)</p>
+                            <p class="card-text">GPA: @Html.DisplayFor(modelItem => item.GPA)</p>
+                            <p class="card-text">Major: @Html.DisplayFor(modelItem => item.Major)</p>
+                            @{
+                                string schoolYearText = "";
+                                if (int.TryParse(item.SchoolYear, out int year))
+                                {
+                                    switch (year)
+                                    {
+                                        case 1:
+                                            schoolYearText = "Freshman";
+                                            break;
+                                        case 2:
+                                            schoolYearText = "Sophomore";
+                                            break;
+                                        case 3:
+                                            schoolYearText = "Junior";
+                                            break;
+                                        case 4:
+                                            schoolYearText = "Senior";
+                                            break;
+                                        default:
+                                            schoolYearText = "Unknown";
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    schoolYearText = "Unknown";
+                                }
+                            }
+                            <p class="card-text">School Year: @schoolYearText</p>
+                            <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableViewButton = document.getElementById("table-view");
+            const cardViewButton = document.getElementById("card-view");
+            const tableContainer = document.getElementById("students-table");
+            const cardContainer = document.getElementById("students-cards");
+
+            tableViewButton.addEventListener("click", function () {
+                tableContainer.style.display = "block";
+                cardContainer.style.display = "none";
+            });
+
+            cardViewButton.addEventListener("click", function () {
+                tableContainer.style.display = "none";
+                cardContainer.style.display = "block";
+            });
+        });
+     </script>
+}
+
+
+
+

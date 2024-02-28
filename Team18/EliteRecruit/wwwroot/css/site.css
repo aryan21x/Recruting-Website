@@ -55,3 +55,23 @@ body {
     visibility: visible !important;
     transform: scaleX(0.7) !important;
 }
+
+
+.custom {
+    color: navy;
+    background-color: transparent !important;
+    border-color: none !important;
+}
+.custom:hover {
+    background-color: navy !important;
+    color: white !important;
+}
+
+.btn.custom:focus,
+.btn.custom:active {
+    box-shadow: none;
+}
+
+#students-cards {
+    display: none; 
+}
