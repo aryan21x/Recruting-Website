@@ -39,7 +39,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="SchoolYear" class="control-label"></label>
-                <input asp-for="SchoolYear" class="form-control" />
+                <select asp-for="SchoolYear" class="form-control">
+                    <option value="">Select School Year</option>
+                    <option value="1">Freshman</option>
+                    <option value="2">Sophomore</option>
+                    <option value="3">Junior</option>
+                    <option value="4">Senior</option>
+                    <option value="4">Graduate</option>
+                </select>
                 <span asp-validation-for="SchoolYear" class="text-danger"></span>
             </div>
             <div class="form-group">
