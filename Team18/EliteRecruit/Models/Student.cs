@@ -33,7 +33,6 @@ namespace EliteRecruit.Models
         public string? Minor { get; set; }
 
         [Display(Name = "School Year")]
-        [Range(1, 4)]
         [Required]
         public string? SchoolYear { get; set; }
 
