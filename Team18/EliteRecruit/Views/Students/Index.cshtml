@@ -4,16 +4,21 @@
     ViewData["Title"] = "Students";
 }
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
 <div class="container mt-5">
     <h1 style="color: navy;">@ViewData["Title"]</h1>
-
     <div class="btn-group mb-3" role="group" aria-label="Switch view">
-        <form asp-controller="Students" asp-action="Index" onsubmit="return validateForm()">
+        <form asp-controller="Students" asp-action="Index" method="get">
             <div class="d-flex align-items-center">
-                <h1 class="text-navy">Name: </h1> 
-                <input type="text" name="SearchString" id="searchInput" class="form-control"/>
-                <input class ="btn custom" type="submit" value="Search" id="searchBtn"/>
+                <button class="btn custom fas fa-search" type="submit" value="" > </button>
+                <input type="text" asp-for="SearchString"  class="form-control"/>
+                <input class="btn custom" type="submit" value="Search"/>
+                <select asp-for="SchoolY" asp-items="Model.GraduationYearOptions" class="btn custom">
+                    <option value="" > Graduation Year</option>
+                </select>
             </div>
         </form>
         <a  class="btn custom" id="table-view">Table View</a>
@@ -25,12 +30,24 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>School</th>
-                    <th>GPA</th>
-                    <th>Major</th>
-                    <th>School Year</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].School)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].GPA)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].Major)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students![0].SchoolYear)
+                    </th>      
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -124,6 +141,7 @@
                                 }
                             }
                             <p class="card-text">School Year: @schoolYearText</p>
+                            <p class="card-text">Graduation Year: @Html.DisplayFor(modelItem => item.GraduationYear)</p>
                             <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         </div>
                     </div>

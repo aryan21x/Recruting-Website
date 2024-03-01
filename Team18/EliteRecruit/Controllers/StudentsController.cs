@@ -22,12 +22,17 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index(string schoolYear, string searchString)
+
+        public async Task<IActionResult> Index(string SchoolY, string searchString)
         {
             if (_context.Student == null)
             {
                 return Problem("Entity set 'DbContext.Student' is null.");
             }
+            IQueryable<string> YearQuery = from m in _context.Student
+                                            orderby m.SchoolYear
+                                            select m.SchoolYear;
+
 
             var students = from s in _context.Student
                            select s;
@@ -35,12 +40,31 @@ namespace EliteRecruit.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.FirstName.Contains(searchString) ||
-                                               s.LastName.Contains(searchString));
+                                               s.LastName.Contains(searchString) ||
+                                               s.Major.Contains(searchString) ||
+                                               s.School.Contains(searchString));
             }
+
+            var graduationYearOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "2027" },
+                new SelectListItem { Value = "2", Text = "2026" },
+                new SelectListItem { Value = "3", Text = "2025" },
+                new SelectListItem { Value = "4", Text = "2024" },
+                new SelectListItem { Value = "5", Text = "2026G" }
+            };
+
+            if (!string.IsNullOrEmpty(SchoolY))
+            {
+                students = students.Where(x => x.SchoolYear == SchoolY);
+            }
+
 
             var studentViewModel = new StudentViewModel
             {
-                Students = await students.ToListAsync()
+                SchoolYear = new SelectList(await YearQuery.Distinct().ToListAsync()),
+                Students = await students.ToListAsync(),
+                GraduationYearOptions = graduationYearOptions
             };
 
             return View(studentViewModel);
