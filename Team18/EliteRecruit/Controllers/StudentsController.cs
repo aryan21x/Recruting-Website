@@ -23,7 +23,7 @@ namespace EliteRecruit.Controllers
 
         // GET: Students
 
-        public async Task<IActionResult> Index(string SchoolY, string searchString)
+        public async Task<IActionResult> Index(string SchoolY, string searchString, string majorString)
         {
             if (_context.Student == null)
             {
@@ -32,6 +32,9 @@ namespace EliteRecruit.Controllers
             IQueryable<string> YearQuery = from m in _context.Student
                                             orderby m.SchoolYear
                                             select m.SchoolYear;
+            IQueryable<string> MajorQuery = from m in _context.Student
+                                           orderby m.Major
+                                           select m.Major;
 
 
             var students = from s in _context.Student
@@ -41,7 +44,6 @@ namespace EliteRecruit.Controllers
             {
                 students = students.Where(s => s.FirstName.Contains(searchString) ||
                                                s.LastName.Contains(searchString) ||
-                                               s.Major.Contains(searchString) ||
                                                s.School.Contains(searchString));
             }
 
@@ -59,10 +61,15 @@ namespace EliteRecruit.Controllers
                 students = students.Where(x => x.SchoolYear == SchoolY);
             }
 
+            if (!string.IsNullOrEmpty(majorString))
+            {
+                students = students.Where(x => x.Major == majorString);
+            }
 
             var studentViewModel = new StudentViewModel
             {
                 SchoolYear = new SelectList(await YearQuery.Distinct().ToListAsync()),
+                Major = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
                 Students = await students.ToListAsync(),
                 GraduationYearOptions = graduationYearOptions
             };
