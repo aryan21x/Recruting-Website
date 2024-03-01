@@ -12,18 +12,20 @@
     <h1 style="color: navy;">@ViewData["Title"]</h1>
     <div class="btn-group mb-3" role="group" aria-label="Switch view">
         <form asp-controller="Students" asp-action="Index" method="get">
-            <div class="d-flex align-items-center">
-                <button class="btn custom fas fa-search" type="submit" value="" > </button>
+            <div >
                 <input type="text" asp-for="SearchString"  class="form-control"/>
-                <input class="btn custom" type="submit" value="Search"/>
+                <button class="btn custom fas fa-search" type="submit" value=""> </button>
                 <select asp-for="SchoolY" asp-items="Model.GraduationYearOptions" class="btn custom">
                     <option value="" > Graduation Year</option>
                 </select>
+                <select asp-for="majorString" asp-items="Model.Major" class="btn custom drop">
+                    <option value=""> Major</option>
+                </select>
+                <a class="btn custom" id="table-view">Table View</a>
+                <a class="btn custom" id="card-view">Card View</a>
+                <a class="btn custom" asp-action="Create">Create New</a>
             </div>
         </form>
-        <a  class="btn custom" id="table-view">Table View</a>
-        <a  class="btn custom" id="card-view">Card View</a>
-        <a  class="btn custom" asp-action="Create">Create New</a>
     </div>
 
     <div id="students-table" class="table-responsive">
