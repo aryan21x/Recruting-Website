@@ -46,6 +46,7 @@ namespace EliteRecruit.Models
         [StringLength(15)]
         public string? PhoneNumber { get; set; }
 
+        [Display(Name = "Graduation Year")]
         public int GraduationYear
         {
             get

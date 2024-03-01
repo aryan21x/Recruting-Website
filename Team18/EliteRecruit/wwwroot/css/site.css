@@ -67,6 +67,7 @@ body {
     color: white !important;
 }
 
+
 .btn.custom:focus,
 .btn.custom:active {
     box-shadow: none;
@@ -80,4 +81,14 @@ body {
     font-size: 15px;
     color: navy;
     padding: 0 1em;
+}
+
+.fas {
+    font-size: 20px;
+    padding: 0.5em 1em;
+}
+
+
+.align {
+    padding: 0.5em 1em;
 }
