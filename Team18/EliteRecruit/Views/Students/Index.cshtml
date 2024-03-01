@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EliteRecruit.Models.Student>
+﻿@model EliteRecruit.Models.StudentViewModel
 
 @{
     ViewData["Title"] = "Students";
@@ -9,6 +9,13 @@
     <h1 style="color: navy;">@ViewData["Title"]</h1>
 
     <div class="btn-group mb-3" role="group" aria-label="Switch view">
+        <form asp-controller="Students" asp-action="Index" onsubmit="return validateForm()">
+            <div class="d-flex align-items-center">
+                <h1 class="text-navy">Name: </h1> 
+                <input type="text" name="SearchString" id="searchInput" class="form-control"/>
+                <input class ="btn custom" type="submit" value="Search" id="searchBtn"/>
+            </div>
+        </form>
         <a  class="btn custom" id="table-view">Table View</a>
         <a  class="btn custom" id="card-view">Card View</a>
         <a  class="btn custom" asp-action="Create">Create New</a>
@@ -28,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Students!)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
@@ -79,7 +86,7 @@
     </div>
     <div id="students-cards">
         <div class="row">
-            @foreach (var item in Model)
+            @foreach (var item in Model.Students!)
             {
                 <div class="col-md-4 mb-4">
                     <div class="card">
@@ -145,6 +152,7 @@
             });
         });
      </script>
+
 }
 
 

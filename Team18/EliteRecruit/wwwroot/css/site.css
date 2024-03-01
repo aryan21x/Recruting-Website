@@ -75,3 +75,9 @@ body {
 #students-cards {
     display: none; 
 }
+
+.text-navy {
+    font-size: 15px;
+    color: navy;
+    padding: 0 1em;
+}
