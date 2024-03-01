@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EliteRecruit.Models
 {
@@ -44,5 +45,25 @@ namespace EliteRecruit.Models
         [RegularExpression(@"^[0-9""'\s-]*$")]
         [StringLength(15)]
         public string? PhoneNumber { get; set; }
+
+        public int GraduationYear
+        {
+            get
+            {
+                if (int.TryParse(SchoolYear, out int year))
+                {
+                    if( year > 4) // graduate 
+                    {
+                        return DateTime.Now.Year + 2;
+                    }
+                    return DateTime.Now.Year + (4 - year);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
     }
 }

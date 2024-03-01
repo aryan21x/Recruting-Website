@@ -22,10 +22,31 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string schoolYear, string searchString)
         {
-            return View(await _context.Student.ToListAsync());
+            if (_context.Student == null)
+            {
+                return Problem("Entity set 'DbContext.Student' is null.");
+            }
+
+            var students = from s in _context.Student
+                           select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.FirstName.Contains(searchString) ||
+                                               s.LastName.Contains(searchString));
+            }
+
+            var studentViewModel = new StudentViewModel
+            {
+                Students = await students.ToListAsync()
+            };
+
+            return View(studentViewModel);
         }
+
+
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
