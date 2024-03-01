@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Team18.Areas.Identity.Pages.Account
 {
@@ -76,6 +77,7 @@ namespace Team18.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com", ErrorMessage = "Invalid Email Address. Email must end in .com")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
