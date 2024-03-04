@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EliteRecruit.Data;
+using EliteRecruit.ViewModels;
 using EliteRecruit.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace EliteRecruit.Controllers
 {
@@ -23,7 +25,7 @@ namespace EliteRecruit.Controllers
 
         // GET: Students
 
-        public async Task<IActionResult> Index(string SchoolY, string searchString, string majorString)
+        public async Task<IActionResult> Index(StudentViewModel studentViewModel, string SchoolY, string searchString, string majorString)
         {
             if (_context.Student == null)
             {
@@ -66,10 +68,10 @@ namespace EliteRecruit.Controllers
                 students = students.Where(x => x.Major == majorString);
             }
 
-            var studentViewModel = new StudentViewModel
+            studentViewModel = new StudentViewModel
             {
-                SchoolYear = new SelectList(await YearQuery.Distinct().ToListAsync()),
-                Major = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
+                SchoolYear2 = new SelectList(await YearQuery.Distinct().ToListAsync()),
+                Major2 = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
                 Students = await students.ToListAsync(),
                 GraduationYearOptions = graduationYearOptions
             };
@@ -82,25 +84,33 @@ namespace EliteRecruit.Controllers
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            StudentViewModel studentViewModel;
             if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _context.Student.FirstOrDefaultAsync(m => m.Id == id);
+
             if (student == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            else
+            {
+                studentViewModel = new(student);
+            }
+
+
+            return View(studentViewModel);
         }
 
         // GET: Students/Create
         public IActionResult Create()
         {
-            return View();
+            StudentViewModel studentViewModel = new();
+            return View(studentViewModel);
         }
 
         // POST: Students/Create
@@ -108,20 +118,34 @@ namespace EliteRecruit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,School,GPA,Major,Minor,SchoolYear,Email,PhoneNumber")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber")] StudentViewModel studentViewModel)
         {
+
             if (ModelState.IsValid)
             {
+                Student student = new()
+                {
+                    FirstName = studentViewModel.FirstName,
+                    LastName = studentViewModel.LastName,
+                    School = studentViewModel.School,
+                    GPA = studentViewModel.GPA,
+                    Major = studentViewModel.Major,
+                    SchoolYear = studentViewModel.SchoolYear,
+                    Email = studentViewModel.Email,
+                    PhoneNumber = studentViewModel.PhoneNumber
+                };
                 _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(studentViewModel);
         }
 
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            StudentViewModel studentViewModel;
+
             if (id == null)
             {
                 return NotFound();
@@ -132,7 +156,12 @@ namespace EliteRecruit.Controllers
             {
                 return NotFound();
             }
-            return View(student);
+            else
+            {
+                studentViewModel = new(student);
+            }
+
+            return View(studentViewModel);
         }
 
         // POST: Students/Edit/5
@@ -140,9 +169,10 @@ namespace EliteRecruit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,School,GPA,Major,Minor,SchoolYear,Email,PhoneNumber")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber")] StudentViewModel studentViewModel)
         {
-            if (id != student.Id)
+
+            if (id != studentViewModel.Id)
             {
                 return NotFound();
             }
@@ -151,12 +181,28 @@ namespace EliteRecruit.Controllers
             {
                 try
                 {
+                    Student student = await _context.Student.FindAsync(studentViewModel.Id);
+                    if (student == null)
+                    {
+                        return NotFound();
+                    }
+
+                    student.FirstName = studentViewModel.FirstName;
+                    student.LastName = studentViewModel.LastName;
+                    student.School = studentViewModel.School;
+                    student.GPA = studentViewModel.GPA;
+                    student.Major = studentViewModel.Major;
+                    student.SchoolYear = studentViewModel.SchoolYear;
+                    student.Email = studentViewModel.Email;
+                    student.PhoneNumber = studentViewModel.PhoneNumber;
+
                     _context.Update(student);
                     await _context.SaveChangesAsync();
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!StudentExists(studentViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -167,25 +213,32 @@ namespace EliteRecruit.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(studentViewModel);
         }
 
         // GET: Students/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            StudentViewModel studentViewModel;
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _context.Student.FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            else
+            {
+                studentViewModel = new(student);
+            }
+
+
+            return View(studentViewModel);
         }
 
         // POST: Students/Delete/5
