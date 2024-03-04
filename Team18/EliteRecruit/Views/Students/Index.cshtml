@@ -1,4 +1,4 @@
-﻿@model EliteRecruit.Models.StudentViewModel
+﻿@model EliteRecruit.ViewModels.StudentViewModel
 
 @{
     ViewData["Title"] = "Students";
@@ -15,10 +15,10 @@
             <div >
                 <input type="text" asp-for="SearchString"  class="form-control"/>
                 <button class="btn custom fas fa-search" type="submit" value=""> </button>
-                <select asp-for="SchoolY" asp-items="Model.GraduationYearOptions" class="btn custom">
-                    <option value="" > Graduation Year</option>
+                <select asp-for="SchoolY" asp-items="Model.GraduationYearOptions" class="btn custom drop">
+                    <option value="" >Year</option>
                 </select>
-                <select asp-for="majorString" asp-items="Model.Major" class="btn custom drop">
+                <select asp-for="majorString" asp-items="Model.Major2" class="btn custom drop">
                     <option value=""> Major</option>
                 </select>
                 <a class="btn custom" id="table-view">Table View</a>

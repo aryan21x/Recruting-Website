@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using EliteRecruit.Models;
 
+
 namespace EliteRecruit.Data
 {
-    public class EliteRecruitContext : IdentityDbContext
+    public class EliteRecruitContext(DbContextOptions<EliteRecruitContext> options) : IdentityDbContext(options)
     {
-        public EliteRecruitContext(DbContextOptions<EliteRecruitContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<EliteRecruit.Models.Student> Student { get; set; } = default!;
+        public DbSet<Models.Student> Student { get; set; } = default!;
     }
 }
