@@ -33,16 +33,16 @@ namespace EliteRecruit.ViewModels
         [Display(Name = "First Name")]
         [StringLength(30, MinimumLength = 2)]
         [Required]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
         [StringLength(30, MinimumLength = 2)]
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? School { get; set; }
+        public string School { get; set; }
 
         [Range(1, 4)]
         [Column(TypeName = "decimal(3, 2)")]
@@ -50,20 +50,20 @@ namespace EliteRecruit.ViewModels
 
         [StringLength(30, MinimumLength = 3)]
         [Required]
-        public string? Major { get; set; }
+        public string Major { get; set; }
 
         [Display(Name = "School Year")]
         [Required]
-        public string? SchoolYear { get; set; }
+        public string SchoolYear { get; set; }
 
         [StringLength(80, MinimumLength = 10)]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "Phone Number")]
         [RegularExpression(@"^[0-9""'\s-]*$")]
         [StringLength(15, MinimumLength = 10, ErrorMessage = "The phone number must be minimum 10 digits long.")]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Display(Name = "Graduation Year")]
         public int GraduationYear
@@ -91,15 +91,15 @@ namespace EliteRecruit.ViewModels
             get { return string.Concat(FirstName, " ", LastName); }
         }
 
-        public List<Student>? Students { get; set; }
-        public string? SearchString { get; set; }
+        public List<Student> Students { get; set; }
+        public string SearchString { get; set; }
 
-        public SelectList? SchoolYear2 { get; set; }
-        public string? SchoolY { get; set; }
+        public SelectList SchoolYear2 { get; set; }
+        public string SchoolY { get; set; }
         public IEnumerable<SelectListItem> GraduationYearOptions { get; set; }
 
-        public SelectList? Major2 { get; set; }
-        public String? majorString { get; set; }
+        public SelectList Major2 { get; set; }
+        public String majorString { get; set; }
 
     }
 }
