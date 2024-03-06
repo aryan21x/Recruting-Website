@@ -125,11 +125,11 @@ namespace EliteRecruit.Controllers
             {
                 Student student = new()
                 {
-                    FirstName = studentViewModel.FirstName,
-                    LastName = studentViewModel.LastName,
-                    School = studentViewModel.School,
+                    FirstName = studentViewModel.FirstName.Trim(),
+                    LastName = studentViewModel.LastName.Trim(),
+                    School = studentViewModel.School.Trim(),
                     GPA = studentViewModel.GPA,
-                    Major = studentViewModel.Major,
+                    Major = studentViewModel.Major.Trim(),
                     SchoolYear = studentViewModel.SchoolYear,
                     Email = studentViewModel.Email,
                     PhoneNumber = studentViewModel.PhoneNumber
@@ -187,11 +187,11 @@ namespace EliteRecruit.Controllers
                         return NotFound();
                     }
 
-                    student.FirstName = studentViewModel.FirstName;
-                    student.LastName = studentViewModel.LastName;
-                    student.School = studentViewModel.School;
+                    student.FirstName = studentViewModel.FirstName.Trim();
+                    student.LastName = studentViewModel.LastName.Trim();
+                    student.School = studentViewModel.School.Trim();
                     student.GPA = studentViewModel.GPA;
-                    student.Major = studentViewModel.Major;
+                    student.Major = studentViewModel.Major.Trim();
                     student.SchoolYear = studentViewModel.SchoolYear;
                     student.Email = studentViewModel.Email;
                     student.PhoneNumber = studentViewModel.PhoneNumber;
