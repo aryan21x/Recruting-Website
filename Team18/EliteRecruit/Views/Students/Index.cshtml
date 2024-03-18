@@ -13,12 +13,12 @@
     <div class="btn-group mb-3" role="group" aria-label="Switch view">
         <form asp-controller="Students" asp-action="Index" method="get">
             <div >
-                <input type="text" asp-for="SearchString"  class="form-control"/>
+                <input type="text" asp-for="searchString"  class="form-control"/>
                 <button class="btn custom fas fa-search" type="submit" value=""> </button>
-                <select asp-for="SchoolY" asp-items="Model.GraduationYearOptions" class="btn custom drop">
+                <select asp-for="SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
                     <option value="" >Year</option>
                 </select>
-                <select asp-for="majorString" asp-items="Model.Major2" class="btn custom drop">
+                <select asp-for="majorString" asp-items="Model.MajorList" class="btn custom drop">
                     <option value=""> Major</option>
                 </select>
                 <a class="btn custom" id="table-view">Table View</a>
@@ -103,6 +103,7 @@
             </tbody>
         </table>
     </div>
+
     <div id="students-cards">
         <div class="row">
             @foreach (var item in Model.Students!)

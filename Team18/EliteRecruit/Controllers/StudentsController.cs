@@ -25,55 +25,53 @@ namespace EliteRecruit.Controllers
 
         // GET: Students
 
-        public async Task<IActionResult> Index(StudentViewModel studentViewModel, string SchoolY, string searchString, string majorString)
+        public async Task<IActionResult> Index(StudentViewModel studentViewModel)
         {
             if (_context.Student == null)
             {
                 return Problem("Entity set 'DbContext.Student' is null.");
             }
-            IQueryable<string> YearQuery = from m in _context.Student
+
+            //  queries for GraduationYear and Major
+
+            IQueryable<string> GraduationYearQuery = from m in _context.Student
                                             orderby m.SchoolYear
                                             select m.SchoolYear;
             IQueryable<string> MajorQuery = from m in _context.Student
                                            orderby m.Major
                                            select m.Major;
 
-
             var students = from s in _context.Student
                            select s;
 
-            if (!string.IsNullOrEmpty(searchString))
+            // searching by firstName, lastName and school
+
+            if (!string.IsNullOrEmpty(studentViewModel.searchString))
             {
-                students = students.Where(s => s.FirstName.Contains(searchString) ||
-                                               s.LastName.Contains(searchString) ||
-                                               s.School.Contains(searchString));
+                students = students.Where(s => s.FirstName.Contains(studentViewModel.searchString) ||
+                                               s.LastName.Contains(studentViewModel.searchString) ||
+                                               s.School.Contains(studentViewModel.searchString));
             }
 
-            var graduationYearOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "2027" },
-                new SelectListItem { Value = "2", Text = "2026" },
-                new SelectListItem { Value = "3", Text = "2025" },
-                new SelectListItem { Value = "4", Text = "2024" },
-                new SelectListItem { Value = "5", Text = "2026G" }
-            };
+            // filter by schoolYear and major
 
-            if (!string.IsNullOrEmpty(SchoolY))
+            if (!string.IsNullOrEmpty(studentViewModel.SchoolYearString))
             {
-                students = students.Where(x => x.SchoolYear == SchoolY);
+                students = students.Where(x => x.SchoolYear == studentViewModel.SchoolYearString);
             }
 
-            if (!string.IsNullOrEmpty(majorString))
+            if (!string.IsNullOrEmpty(studentViewModel.majorString))
             {
-                students = students.Where(x => x.Major == majorString);
+                students = students.Where(x => x.Major == studentViewModel.majorString);
             }
+
 
             studentViewModel = new StudentViewModel
             {
-                SchoolYear2 = new SelectList(await YearQuery.Distinct().ToListAsync()),
-                Major2 = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
+                SchoolYearList = new SelectList(await GraduationYearQuery.Distinct().ToListAsync()),
+                MajorList = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
                 Students = await students.ToListAsync(),
-                GraduationYearOptions = graduationYearOptions
+                GraduationYearOptions = studentViewModel.GraduationYearOptions
             };
 
             return View(studentViewModel);

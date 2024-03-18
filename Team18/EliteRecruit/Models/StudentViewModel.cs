@@ -92,15 +92,22 @@ namespace EliteRecruit.ViewModels
         }
 
         public List<Student> Students { get; set; }
-        public string SearchString { get; set; }
+        public string searchString { get; set; }
 
-        public SelectList SchoolYear2 { get; set; }
-        public string SchoolY { get; set; }
-        public IEnumerable<SelectListItem> GraduationYearOptions { get; set; }
+        public SelectList SchoolYearList { get; set; }
+        public string SchoolYearString { get; set; }
 
-        public SelectList Major2 { get; set; }
+        public SelectList MajorList { get; set; }
         public String majorString { get; set; }
 
+        public IEnumerable<SelectListItem> GraduationYearOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "2027" },
+                new SelectListItem { Value = "2", Text = "2026" },
+                new SelectListItem { Value = "3", Text = "2025" },
+                new SelectListItem { Value = "4", Text = "2024" },
+                new SelectListItem { Value = "5", Text = "2026G" }
+            };
     }
 }
 
