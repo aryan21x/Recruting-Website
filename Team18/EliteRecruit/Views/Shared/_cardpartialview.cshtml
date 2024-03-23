@@ -1,0 +1,48 @@
+﻿@model EliteRecruit.ViewModels.StudentViewModel
+
+    <div class="row">
+        @foreach (var item in Model.Students!)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h5>
+                        <p class="card-text">School: @Html.DisplayFor(modelItem => item.School)</p>
+                        <p class="card-text">GPA: @Html.DisplayFor(modelItem => item.GPA)</p>
+                        <p class="card-text">Major: @Html.DisplayFor(modelItem => item.Major)</p>
+                        @{
+                            string schoolYearText = "";
+                            if (int.TryParse(item.SchoolYear, out int year))
+                            {
+                                switch (year)
+                                {
+                                    case 1:
+                                        schoolYearText = "Freshman";
+                                        break;
+                                    case 2:
+                                        schoolYearText = "Sophomore";
+                                        break;
+                                    case 3:
+                                        schoolYearText = "Junior";
+                                        break;
+                                    case 4:
+                                        schoolYearText = "Senior";
+                                        break;
+                                    case 5:
+                                        schoolYearText = "Graduate";
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                schoolYearText = "Unknown";
+                            }
+                        }
+                        <p class="card-text">School Year: @schoolYearText</p>
+                        <p class="card-text">Graduation Year: @Html.DisplayFor(modelItem => item.GraduationYear)</p>
+                        <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
