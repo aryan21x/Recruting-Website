@@ -4,6 +4,8 @@ using EliteRecruit.Data;
 using EliteRecruit.Models;
 using EliteRecruit.Data.SeedData;
 using Microsoft.AspNetCore.Identity;
+using EliteRecruit.Interfaces;
+using EliteRecruit.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EliteRecruitContext>(options =>
@@ -13,6 +15,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 

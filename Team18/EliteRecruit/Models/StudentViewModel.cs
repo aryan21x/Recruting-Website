@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static EliteRecruit.Helpers.Enums;
 
 namespace EliteRecruit.ViewModels
 {
@@ -108,6 +109,11 @@ namespace EliteRecruit.ViewModels
                 new SelectListItem { Value = "4", Text = "2024" },
                 new SelectListItem { Value = "5", Text = "2026G" }
             };
+        
+        public SortByParameter SortBy { get; set; }
+        public SortByParameter SortByFirstName { get; set; }
+        public SortByParameter SortByLastName { get; set; }
+        public SortByParameter SortByGraduationDate { get; set; }
     }
 }
 
