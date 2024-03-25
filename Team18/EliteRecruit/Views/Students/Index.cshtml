@@ -7,107 +7,110 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+<body>
+    <div class="container font2">
+        
+        <h1 style="color: navy;">Students</h1>
+        <div class="btn-group mb-3" role="group" aria-label="Switch view">
+            <form asp-controller="Students" asp-action="Index" method="get">
+                <div>
+                    <input type="text" asp-for="searchString" class="form-control" />
+                    <button class="btn custom fas fa-search" type="submit" value=""> </button>
+                    <select asp-for="SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
+                        <option value="">Year</option>
+                    </select>
+                    <select asp-for="majorString" asp-items="Model.MajorList" class="btn custom drop">
+                        <option value=""> Major</option>
+                    </select>
+                    <a class="btn custom" id="table-view">Table View</a>
+                    <a class="btn custom" id="card-view">Card View</a>
+                    <a class="btn custom" asp-action="Create">Create New</a>
+                </div>
+            </form>
+        </div>
 
-<div class="container mt-5">
-    <h1 style="color: navy;">@ViewData["Title"]</h1>
-    <div class="btn-group mb-3" role="group" aria-label="Switch view">
-        <form asp-controller="Students" asp-action="Index" method="get">
-            <div >
-                <input type="text" asp-for="searchString"  class="form-control"/>
-                <button class="btn custom fas fa-search" type="submit" value=""> </button>
-                <select asp-for="SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
-                    <option value="" >Year</option>
-                </select>
-                <select asp-for="majorString" asp-items="Model.MajorList" class="btn custom drop">
-                    <option value=""> Major</option>
-                </select>
-                <a class="btn custom" id="table-view">Table View</a>
-                <a class="btn custom" id="card-view">Card View</a>
-                <a class="btn custom" asp-action="Create">Create New</a>
-            </div>
-        </form>
-    </div>
-
-    <div id="students-table" class="table-responsive">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].FirstName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].LastName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].School)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].GPA)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].Major)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Students![0].SchoolYear)
-                    </th>      
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Students!)
-                {
+        <div id="students-table" class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.School)</td>
-                        <td>@Html.DisplayFor(modelItem => item.GPA)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Major)</td>
-                        <td>
-                            @{
-                                string schoolYearText = "";
-                                if (int.TryParse(item.SchoolYear, out int year))
-                                {
-                                    switch (year)
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].School)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].GPA)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].Major)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students![0].SchoolYear)
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Students!)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.School)</td>
+                            <td>@Html.DisplayFor(modelItem => item.GPA)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Major)</td>
+                            <td>
+                                @{
+                                    string schoolYearText = "";
+                                    if (int.TryParse(item.SchoolYear, out int year))
                                     {
-                                        case 1:
-                                            schoolYearText = "Freshman";
-                                            break;
-                                        case 2:
-                                            schoolYearText = "Sophomore";
-                                            break;
-                                        case 3:
-                                            schoolYearText = "Junior";
-                                            break;
-                                        case 4:
-                                            schoolYearText = "Senior";
-                                            break;
-                                        case 5:
-                                            schoolYearText = "Graduate";
-                                            break;
+                                        switch (year)
+                                        {
+                                            case 1:
+                                                schoolYearText = "Freshman";
+                                                break;
+                                            case 2:
+                                                schoolYearText = "Sophomore";
+                                                break;
+                                            case 3:
+                                                schoolYearText = "Junior";
+                                                break;
+                                            case 4:
+                                                schoolYearText = "Senior";
+                                                break;
+                                            case 5:
+                                                schoolYearText = "Graduate";
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        schoolYearText = "Unknown";
                                     }
                                 }
-                                else
-                                {
-                                    schoolYearText = "Unknown";
-                                }
-                            }
-                            @schoolYearText
-                        </td>
-                        <td>
-                            <a class="btn custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                                @schoolYearText
+                            </td>
+                            <td>
+                                <a class="btn custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                <a class="btn custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-    <div id="students-cards">
-        @await Html.PartialAsync("_cardpartialview")
+        <div id="students-cards">
+            @await Html.PartialAsync("_cardpartialview")
+        </div>
     </div>
-</div>
+</body>
+
 
 @section Scripts {
    <script>
