@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Home Page";
@@ -14,12 +15,18 @@
             <h8>Connecting Talent to Opportunity!</h8>
             @if (!SignInManager.IsSignedIn(User))
             {
-                <partial name="_LoginPartial" />
+
+                <div class="intro-buttons">
+                        <a class="btn nologinbtn" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <a class="btn nologinbtn" text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </div>
             }
         </div>
 
     </div>
 </body>
+
+
 
 
 

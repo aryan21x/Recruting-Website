@@ -146,3 +146,22 @@ body {
     position: relative;
     top: 5em;
 }
+
+.intro-buttons {
+    margin: 2rem 0;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+.nologinbtn {
+    color: navy;
+    padding: 0.5em 1.5em;
+    background-color: transparent !important;
+    border-color: none !important;
+}
+
+.nologinbtn:hover {
+    background-color: navy !important;
+    color: white !important;
+}
