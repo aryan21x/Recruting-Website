@@ -21,6 +21,10 @@
     <EmbeddedResource Include="Data\SeedData\seedData.csv" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="EliteRecruit.Tests\KnewRecruit.Tests.csproj" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
@@ -33,6 +37,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="xunit" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
