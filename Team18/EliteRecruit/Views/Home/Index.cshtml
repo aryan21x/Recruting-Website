@@ -1,43 +1,32 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="text-center mb-5">
-        <h1 class="display-4">EliteRecruit</h1>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h2 class="display-5">Product Vision Statement</h2>
-            <p class="lead">
-                For recruiters who need to find potential employees that fit the job
-                requirements and students looking for internships or jobs to boost
-                their resume or find a career, EliteRecruit is a recruitment site
-                that gives students an outlet to make their accomplishments and
-                desires known to recruiters and gives recruiters the ability to find
-                the perfect fit for open positions. Unlike Handshake, EliteRecruit
-                will give students the ability to showcase their accomplishments and
-                projects and encourages recruiters to reach out to students about
-                relevant projects and work experience. The goal is for recruiters to
-                make a connection with students so students can show off more than
-                basic descriptions and so recruiters can learn more about the student
-                before they make a final decision.
-            </p>
+<body class="font">
+    <div id="backgroundimage">
+        <img class="logo" src="pics/favicon.jpg" alt="Background Image">
+        <div class=" text-center mb-5">
+            <h1 class="display-4">EliteRecruit</h1>
+            <h8>Connecting Talent to Opportunity!</h8>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+
+                <div class="intro-buttons">
+                        <a class="btn nologinbtn" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <a class="btn nologinbtn" text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </div>
+            }
         </div>
-        <div class="col-md-6">
-            <h2 class="display-5">Product Value Proposition</h2>
-            <p class="lead">
-                Let us help you find your next great hire. Recruiters waste a lot of
-                time looking for the perfect fit to the job description. We aim to
-                cut down that time by allowing recruiters to filter for their desired
-                attributes so they can focus on learning more in-depth details about
-                great potential hires instead of just sending pre-generated messages
-                to everyone that meets at least one requirement. Now that you have
-                great candidates and you know some specifics about each of them, you
-                have all the information you need to make the right decision on who
-                to hire.
-            </p>
-        </div>
+
     </div>
-</div>
+</body>
+
+
+
+
+
