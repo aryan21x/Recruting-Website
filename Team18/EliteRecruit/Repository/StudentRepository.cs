@@ -1,4 +1,5 @@
 ﻿using EliteRecruit.Data;
+using EliteRecruit.Helpers;
 using EliteRecruit.Interfaces;
 using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
@@ -12,6 +13,16 @@ namespace EliteRecruit.Repository
     {
         private EliteRecruitContext _context = context;
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _context = null;
+        }
         /*public StudentRepository(Student context)
         {
             this.context = context;
@@ -32,9 +43,11 @@ namespace EliteRecruit.Repository
                 SortByParameter.FirstNameDESC => students.OrderByDescending(o => o.FirstName).ThenByDescending(o => o.LastName),
                 SortByParameter.LastNameASC => students.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
                 SortByParameter.LastNameDESC => students.OrderByDescending(o => o.LastName).ThenByDescending(o => o.FirstName),
-                SortByParameter.GraduationDateASC => students.OrderBy(o => o.GraduationYear).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
+
+                /*SortByParameter.GraduationDateASC => students.OrderBy(o => o.GraduationYear).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
                 SortByParameter.GraduationDateDESC => students.OrderByDescending(o => o.GraduationYear).ThenByDescending(o => o.FirstName).ThenByDescending(o => o.LastName),
-                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GraduationYear),
+                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GraduationYear),*/
+                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName),
             };
 
             return await students.ToListAsync();
@@ -119,29 +132,6 @@ namespace EliteRecruit.Repository
             return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
 
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-            disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

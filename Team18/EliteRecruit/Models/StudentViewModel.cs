@@ -92,7 +92,7 @@ namespace EliteRecruit.ViewModels
             get { return string.Concat(FirstName, " ", LastName); }
         }
 
-        public List<Student> Students { get; set; }
+        public IEnumerable<Student> Students { get; set; }
         public string searchString { get; set; }
 
         public SelectList SchoolYearList { get; set; }
@@ -110,9 +110,14 @@ namespace EliteRecruit.ViewModels
                 new SelectListItem { Value = "5", Text = "2026G" }
             };
         
+        public string FilterBy {  get; set; }
         public SortByParameter SortBy { get; set; }
         public SortByParameter SortByFirstName { get; set; }
         public SortByParameter SortByLastName { get; set; }
+        public SortByParameter SortBySchool { get; set; }
+        public SortByParameter SortByGPA { get; set; }
+        public SortByParameter SortByMajor { get; set; }
+        public SortByParameter SortBySchoolYear { get; set; }
         public SortByParameter SortByGraduationDate { get; set; }
     }
 }

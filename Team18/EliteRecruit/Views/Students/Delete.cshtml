@@ -95,8 +95,11 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.FilterBy)
+        @Html.HiddenFor(model => model.SortBy)
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
+        @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy })
     </form>
 </div>

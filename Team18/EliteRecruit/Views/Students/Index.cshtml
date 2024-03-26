@@ -23,7 +23,8 @@
                 </select>
                 <a class="btn custom" id="table-view">Table View</a>
                 <a class="btn custom" id="card-view">Card View</a>
-                <a class="btn custom" asp-action="Create">Create New</a>
+                <!-- <a class="btn custom" asp-action="Create">Create New</a> -->
+                @Html.ActionLink("New", "Create", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "btn btn-primary" })
             </div>
         </form>
     </div>
@@ -33,22 +34,22 @@
             <thead class="thead-dark">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].FirstName)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].LastName)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].School)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.School), "Index", new { SortBy = Model.SortBySchool, FilterBy = Model.FilterBy })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].GPA)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].Major)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.Major), "Index", new { SortBy = Model.SortByMajor, FilterBy = Model.FilterBy })
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Students![0].SchoolYear)
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.SchoolYear), "Index", new { SortBy = Model.SortBySchoolYear, FilterBy = Model.FilterBy })
                     </th>      
                     <th>Actions</th>
                 </tr>
@@ -94,9 +95,12 @@
                             @schoolYearText
                         </td>
                         <td>
-                            <a class="btn custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <!-- <a class="btn custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                             <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a> -->
+                            @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }) |
+                            @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }) |
+                            @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy })
                         </td>
                     </tr>
                 }

@@ -7,9 +7,10 @@
             FirstNameASC = 0,
             FirstNameDESC,
             LastNameASC,
-            LastNameDESC,
-            GraduationDateASC,
-            GraduationDateDESC
+            LastNameDESC
+
+            //GraduationDateASC,
+            //GraduationDateDESC
         }
         public enum OrderByParameter
         {
