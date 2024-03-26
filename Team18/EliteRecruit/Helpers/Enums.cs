@@ -8,13 +8,17 @@
             FirstNameDESC,
             LastNameASC,
             LastNameDESC,
-            GraduationDateASC,
-            GraduationDateDESC
+            GPAASC,
+            GPADSC
+
+            //GraduationDateASC,
+            //GraduationDateDESC
         }
         public enum OrderByParameter
         {
             Ascending = 0,
             Descending
         }
+
     }
 }

@@ -1,9 +1,10 @@
 ﻿using EliteRecruit.Data;
+using EliteRecruit.Helpers;
 using EliteRecruit.Interfaces;
 using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using static EliteRecruit.Helpers.Enums;
 
 namespace EliteRecruit.Repository
@@ -12,29 +13,62 @@ namespace EliteRecruit.Repository
     {
         private EliteRecruitContext _context = context;
 
-        /*public StudentRepository(Student context)
+        public void Dispose()
         {
-            this.context = context;
-        }*/
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-        public async Task<IList<Student>> GetStudents(string filterBy, SortByParameter sortBy)
+        protected virtual void Dispose(bool disposing)
+        {
+            _context = null;
+        }
+
+
+        public async Task<IList<Student>> GetStudents(string filterBy, SortByParameter sortBy, StudentViewModel studentViewModel)
         {
             var students = from s in _context.Student
                            select s;
 
-            if (string.IsNullOrEmpty(filterBy) == false) 
+            if (string.IsNullOrEmpty(filterBy) == false)
             {
                 students = students.Where(s => s.FirstName.Contains(filterBy) || s.LastName.Contains(filterBy));
             }
+
+            if (!string.IsNullOrEmpty(studentViewModel.majorString))
+            {
+                students = students.Where(x => x.Major == studentViewModel.majorString);
+            }
+
+            if (!string.IsNullOrEmpty(studentViewModel.SchoolYearString))
+            {
+                students = students.Where(x => x.SchoolYear == studentViewModel.SchoolYearString);
+            }
+
+            IQueryable<string> MajorQuery = from m in _context.Student
+                                            orderby m.Major
+                                            select m.Major;
+            studentViewModel.MajorList = new SelectList(await MajorQuery.Distinct().ToArrayAsync());
+
+            IQueryable<string> GraduationYearQuery = from m in _context.Student
+                                                     orderby m.SchoolYear
+                                                     select m.SchoolYear;
+
+            studentViewModel.SchoolYearList = new SelectList(await GraduationYearQuery.Distinct().ToListAsync());
 
             students = sortBy switch
             {
                 SortByParameter.FirstNameDESC => students.OrderByDescending(o => o.FirstName).ThenByDescending(o => o.LastName),
                 SortByParameter.LastNameASC => students.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
                 SortByParameter.LastNameDESC => students.OrderByDescending(o => o.LastName).ThenByDescending(o => o.FirstName),
-                SortByParameter.GraduationDateASC => students.OrderBy(o => o.GraduationYear).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
+                SortByParameter.GPAASC => students.OrderBy(o => o.GPA).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
+                SortByParameter.GPADSC => students.OrderByDescending(o => o.GPA).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
+
+
+                /*SortByParameter.GraduationDateASC => students.OrderBy(o => o.GraduationYear).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
                 SortByParameter.GraduationDateDESC => students.OrderByDescending(o => o.GraduationYear).ThenByDescending(o => o.FirstName).ThenByDescending(o => o.LastName),
-                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GraduationYear),
+                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GraduationYear),*/
+                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GPA),
             };
 
             return await students.ToListAsync();
@@ -49,9 +83,7 @@ namespace EliteRecruit.Repository
         {
             Student student = new()
             {
-                //FirstName = studentViewModel.FirstName.Trim(),
-                //LastName = studentViewModel.LastName.Trim(),
-                //GraduationDate = studentViewModel.GraduationDate
+
                 FirstName = studentViewModel.FirstName.Trim(),
                 LastName = studentViewModel.LastName.Trim(),
                 School = studentViewModel.School.Trim(),
@@ -84,9 +116,6 @@ namespace EliteRecruit.Repository
             {
                 student = await _context.Student.FindAsync(studentViewModel.Id);
 
-                //student.FirstName = studentViewModel.FirstName.Trim();
-                //student.LastName = studentViewModel.LastName.Trim();
-                //student.GraduationDate = studentViewModel.GraduationDate;
                 student.FirstName = studentViewModel.FirstName.Trim();
                 student.LastName = studentViewModel.LastName.Trim();
                 student.School = studentViewModel.School.Trim();
@@ -119,29 +148,6 @@ namespace EliteRecruit.Repository
             return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
 
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-            disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
     }
 }
