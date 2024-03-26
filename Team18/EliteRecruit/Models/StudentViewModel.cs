@@ -99,7 +99,7 @@ namespace EliteRecruit.ViewModels
         public string SchoolYearString { get; set; }
 
         public SelectList MajorList { get; set; }
-        public String majorString { get; set; }
+        public string majorString { get; set; }
 
         public IEnumerable<SelectListItem> GraduationYearOptions = new List<SelectListItem>
             {

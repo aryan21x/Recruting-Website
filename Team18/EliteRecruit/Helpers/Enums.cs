@@ -7,7 +7,9 @@
             FirstNameASC = 0,
             FirstNameDESC,
             LastNameASC,
-            LastNameDESC
+            LastNameDESC,
+            GPAASC,
+            GPADSC
 
             //GraduationDateASC,
             //GraduationDateDESC
@@ -17,5 +19,6 @@
             Ascending = 0,
             Descending
         }
+
     }
 }

@@ -13,10 +13,13 @@
     <div class="btn-group mb-3" role="group" aria-label="Switch view">
         <form asp-controller="Students" asp-action="Index" method="get">
             <div >
-                <input type="text" asp-for="searchString"  class="form-control"/>
+                <!-- <input type="text" asp-for="searchString"  class="form-control"/> -->
+                <input type="text" asp-for="@Model.FilterBy" placeholder="Enter name..." class="form-control" />
                 <button class="btn custom fas fa-search" type="submit" value=""> </button>
+                <a asp-action="Index" class="btn custom">Clear</a>
                 <select asp-for="SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
                     <option value="" >Year</option>
+
                 </select>
                 <select asp-for="majorString" asp-items="Model.MajorList" class="btn custom drop">
                     <option value=""> Major</option>
@@ -24,7 +27,7 @@
                 <a class="btn custom" id="table-view">Table View</a>
                 <a class="btn custom" id="card-view">Card View</a>
                 <!-- <a class="btn custom" asp-action="Create">Create New</a> -->
-                @Html.ActionLink("New", "Create", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("New", "Create", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "btn custom" })
             </div>
         </form>
     </div>
@@ -34,22 +37,22 @@
             <thead class="thead-dark">
                 <tr>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy })
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy }, new { @class = "nav-link2" })
                     </th>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy })
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy }, new { @class = "nav-link2" })
                     </th>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.School), "Index", new { SortBy = Model.SortBySchool, FilterBy = Model.FilterBy })
+                        @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy }, new { @class = "nav-link2" })
                     </th>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy })
+                        @Html.DisplayNameFor(model => model.School)
                     </th>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.Major), "Index", new { SortBy = Model.SortByMajor, FilterBy = Model.FilterBy })
+                        @Html.DisplayNameFor(model => model.Major)
                     </th>
                     <th>
-                        @Html.ActionLink(Html.DisplayNameFor(model => model.SchoolYear), "Index", new { SortBy = Model.SortBySchoolYear, FilterBy = Model.FilterBy })
+                        @Html.DisplayNameFor(model => model.SchoolYear)
                     </th>      
                     <th>Actions</th>
                 </tr>
@@ -60,8 +63,8 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                         <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.School)</td>
                         <td>@Html.DisplayFor(modelItem => item.GPA)</td>
+                        <td>@Html.DisplayFor(modelItem => item.School)</td>
                         <td>@Html.DisplayFor(modelItem => item.Major)</td>
                         <td>
                             @{

@@ -20,64 +20,15 @@ namespace EliteRecruit.Controllers
     {
         private readonly IStudentRepository _studentRepository = studentRepository;
 
-        /*public StudentsController(EliteRecruitContext context)
-        {
-            _context = context;
-        }*/
-
         // GET: Students
+
 
         public async Task<IActionResult> Index(StudentViewModel studentViewModel)
         {
-            /*if (_context.Student == null)
-            {
-                return Problem("Entity set 'DbContext.Student' is null.");
-            }
 
-            //  queries for GraduationYear and Major
-
-            IQueryable<string> GraduationYearQuery = from m in _context.Student
-                                            orderby m.SchoolYear
-                                            select m.SchoolYear;
-            IQueryable<string> MajorQuery = from m in _context.Student
-                                           orderby m.Major
-                                           select m.Major;
-
-            var students = from s in _context.Student
-                           select s;
-
-            // searching by firstName, lastName and school
-
-            if (!string.IsNullOrEmpty(studentViewModel.searchString))
-            {
-                students = students.Where(s => s.FirstName.Contains(studentViewModel.searchString) ||
-                                               s.LastName.Contains(studentViewModel.searchString) ||
-                                               s.School.Contains(studentViewModel.searchString));
-            }
-
-            // filter by schoolYear and major
-
-            if (!string.IsNullOrEmpty(studentViewModel.SchoolYearString))
-            {
-                students = students.Where(x => x.SchoolYear == studentViewModel.SchoolYearString);
-            }
-
-            if (!string.IsNullOrEmpty(studentViewModel.majorString))
-            {
-                students = students.Where(x => x.Major == studentViewModel.majorString);
-            }
-
-
-            studentViewModel = new StudentViewModel
-            {
-                SchoolYearList = new SelectList(await GraduationYearQuery.Distinct().ToListAsync()),
-                MajorList = new SelectList(await MajorQuery.Distinct().ToArrayAsync()),
-                Students = await students.ToListAsync(),
-                GraduationYearOptions = studentViewModel.GraduationYearOptions
-            };*/
             MaintainViewState(ref studentViewModel);
 
-            studentViewModel.Students = await _studentRepository.GetStudents(studentViewModel.FilterBy, studentViewModel.SortBy);
+            studentViewModel.Students = await _studentRepository.GetStudents(studentViewModel.FilterBy, studentViewModel.SortBy, studentViewModel);
 
             return View(studentViewModel);
         }
@@ -199,40 +150,11 @@ namespace EliteRecruit.Controllers
 
             if (ModelState.IsValid)
             {
-                /*try
-                {
-                    Student student = await _context.Student.FindAsync(studentViewModel.Id);
-                    if (student == null)
-                    {
-                        return NotFound();
-                    }
-
-                    student.FirstName = studentViewModel.FirstName.Trim();
-                    student.LastName = studentViewModel.LastName.Trim();
-                    student.School = studentViewModel.School.Trim();
-                    student.GPA = studentViewModel.GPA;
-                    student.Major = studentViewModel.Major.Trim();
-                    student.SchoolYear = studentViewModel.SchoolYear;
-                    student.Email = studentViewModel.Email;
-                    student.PhoneNumber = studentViewModel.PhoneNumber;
-
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
-                }*/
-
                 var updatedStudent = await _studentRepository.UpdateStudent(studentViewModel);
 
                 //catch (DbUpdateConcurrencyException)
                 if (updatedStudent == null)
                 {
-                    /*if (!StudentExists(studentViewModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }*/
                     return NotFound();
                 }
                 return RedirectToAction(nameof(Index), studentViewModel);
@@ -309,6 +231,15 @@ namespace EliteRecruit.Controllers
             else
             {
                 studentViewModel.SortByLastName = SortByParameter.LastNameASC;
+            }
+
+            if (studentViewModel.SortBy == SortByParameter.GPAASC)
+            {
+                studentViewModel.SortByGPA = SortByParameter.GPADSC;
+            }
+            else
+            {
+                studentViewModel.SortByGPA = SortByParameter.GPAASC;
             }
 
             // Swap Graduation Date sort order.
