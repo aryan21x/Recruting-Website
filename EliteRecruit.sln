@@ -5,6 +5,14 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EliteRecruit", "EliteRecruit\EliteRecruit.csproj", "{E0D61CEA-8624-4BD5-B321-E6DEA08CE347}"
 EndProject
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.gitlab-ci.yml = .gitlab-ci.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EliteRecruit.Tests", "EliteRecruit.Tests\EliteRecruit.Tests.csproj", "{CD111F1E-3E00-435C-8B51-8C13704311D4}"
 EndProject
 Global

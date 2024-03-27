@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using static EliteRecruit.Helpers.Enums;
 
+
 namespace EliteRecruit.Controllers
 {
     [Authorize]
@@ -241,16 +242,6 @@ namespace EliteRecruit.Controllers
             {
                 studentViewModel.SortByGPA = SortByParameter.GPAASC;
             }
-
-            // Swap Graduation Date sort order.
-            /*if (studentViewModel.SortBy == SortByParameter.GraduationDateASC)
-            {
-                studentViewModel.SortByGraduationDate = SortByParameter.GraduationDateDESC;
-            }
-            else
-            {
-                studentViewModel.SortByGraduationDate = SortByParameter.GraduationDateASC;
-            }*/
         }
     }
 }
