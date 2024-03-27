@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using static EliteRecruit.Helpers.Enums;
 
+
 namespace EliteRecruit.Controllers
 {
     [Authorize]
