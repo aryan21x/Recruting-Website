@@ -8,7 +8,6 @@ build:
   tags: 
     - csc340
   script:
-    - cd Team18
     - dotnet restore
     - dotnet build --configuration Release
 test:
