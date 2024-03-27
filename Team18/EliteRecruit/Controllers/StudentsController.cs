@@ -241,16 +241,6 @@ namespace EliteRecruit.Controllers
             {
                 studentViewModel.SortByGPA = SortByParameter.GPAASC;
             }
-
-            // Swap Graduation Date sort order.
-            /*if (studentViewModel.SortBy == SortByParameter.GraduationDateASC)
-            {
-                studentViewModel.SortByGraduationDate = SortByParameter.GraduationDateDESC;
-            }
-            else
-            {
-                studentViewModel.SortByGraduationDate = SortByParameter.GraduationDateASC;
-            }*/
         }
     }
 }
