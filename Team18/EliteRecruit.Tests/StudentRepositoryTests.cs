@@ -192,6 +192,154 @@ namespace EliteRecruit.Tests
                 s => Assert.Equal(Constants.GPA_3, s.GPA),
                 s => Assert.Equal(Constants.GPA_2, s.GPA));
         }
+
+        [Fact]
+        public async Task Get_Student_ById()
+        {
+            // Arrange.
+            int studentId = 1;
+
+            // Act.
+            Student student = await _repository.GetStudentByID(studentId);
+
+            // Assert.
+            Assert.Equal(Constants.LAST_NAME_1, student.LastName);
+        }
+
+        [Fact]
+        public async Task Get_Student_ById_NotFound()
+        {
+            // Arrange.
+            int studentId = -1;
+
+            // Act.
+            Student student = await _repository.GetStudentByID(studentId);
+
+            // Assert.
+            Assert.Null(student);
+        }
+
+        [Fact]
+        public async Task Get_Student_ById_After_Insert()
+        {
+            // Arrange.
+            StudentViewModel viewModel = new()
+            {
+                FirstName = "Test",
+                LastName = "GetById",
+                School = "TestSchool",
+                GPA = 3.5M,
+                Major = "Physics",
+                SchoolYear = "Junior",
+                Email = "testemail@gmail.com",
+                PhoneNumber = "1234567891"
+            };
+
+            // Act.
+            Student newStudent = await _repository.InsertStudent(viewModel);
+            Student sudent = await _repository.GetStudentByID(newStudent.Id);
+
+            // Assert.
+            Assert.Same(newStudent, sudent);
+            Assert.Equal(sudent.LastName, viewModel.LastName);
+
+            // Cleanup.
+            await _repository.DeleteStudent(newStudent.Id);
+        }
+
         
+        [Fact]
+        public async Task Insert_Student()
+        {
+            // Arrange.
+            StudentViewModel viewModel = new()
+            {
+                FirstName = "Test",
+                LastName = "Insert",
+                GPA = 3.5M,
+                School = "TestSchool",
+                Major = "Physics",
+                SchoolYear = "Junior",
+                Email = "testemail@gmail.com",
+                PhoneNumber = "1234567891"
+            };
+
+            // Act.
+            Student newStudent = await _repository.InsertStudent(viewModel);
+            Student student = await _repository.GetStudentByID(newStudent.Id);
+
+            // Assert.
+            Assert.Same(newStudent, student);
+            Assert.Equal(student.LastName, viewModel.LastName);
+            Assert.Equal(student.GPA, viewModel.GPA);
+
+            // Cleanup.
+            await _repository.DeleteStudent(newStudent.Id);
+        }
+        
+        [Fact]
+        public async Task Update_Student()
+        {
+            // Arrange.
+            string tempLastName = "Update_Update";
+
+            StudentViewModel viewModel = new()
+            {
+                FirstName = "Test",
+                LastName = "Update",
+                GPA = 3.1M,
+                School = "TestSchool",
+                Major = "Physics",
+                SchoolYear = "Junior",
+                Email = "testemail@gmail.com",
+                PhoneNumber = "1234567891"
+            };
+
+            // Act.
+            Student newStudent = await _repository.InsertStudent(viewModel);
+
+            viewModel.Id = newStudent.Id;
+            viewModel.FirstName = newStudent.FirstName;
+            viewModel.LastName = tempLastName;
+            viewModel.GPA = 3.1M;
+
+            Student student = await _repository.UpdateStudent(viewModel);
+
+            // Assert.
+            Assert.IsAssignableFrom<Student>(student);
+            Assert.Equal(student.LastName, tempLastName);
+
+            // Cleanup.
+            await _repository.DeleteStudent(newStudent.Id);
+        }
+        
+        [Fact]
+        public async Task Delete_Student()
+        {
+            // Arrange.
+            StudentViewModel viewModel = new()
+            {
+                FirstName = "Test",
+                LastName = "Delete",
+                GPA = 3.9M,
+                School = "TestSchool",
+                Major = "Physics",
+                SchoolYear = "Junior",
+                Email = "testemail@gmail.com",
+                PhoneNumber = "1234567891"
+            };
+
+            // Act.
+            Student newStudent = await _repository.InsertStudent(viewModel);
+
+            int id = newStudent.Id;
+            await _repository.DeleteStudent(id);
+
+            Student student = await _repository.GetStudentByID(id);
+
+            // Assert.
+            Assert.Null(student);
+        }
+
     }
 }
