@@ -77,9 +77,9 @@ namespace EliteRecruit.Tests.Fixture
         {
             context.Student
                 .AddRange(
-                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_1 },
-                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_2 },
-                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_3 });
+                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_1, GPA = Constants.GPA_1},
+                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_2, GPA = Constants.GPA_2 },
+                    new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_3, GPA = Constants.GPA_3 });
         }
     }
 }
