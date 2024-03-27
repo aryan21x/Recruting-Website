@@ -1,11 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using EliteRecruit.Data;
-using EliteRecruit.Models;
 using EliteRecruit.Data.SeedData;
-using Microsoft.AspNetCore.Identity;
 using EliteRecruit.Interfaces;
 using EliteRecruit.Repository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EliteRecruitContext>(options =>

@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace EliteRecruit.Models
+﻿namespace EliteRecruit.Models
 {
     public class Student
     {
@@ -21,7 +18,7 @@ namespace EliteRecruit.Models
             {
                 if (int.TryParse(SchoolYear, out int year))
                 {
-                    if( year > 4) // graduate 
+                    if (year > 4) // graduate 
                     {
                         return DateTime.Now.Year + 2;
                     }

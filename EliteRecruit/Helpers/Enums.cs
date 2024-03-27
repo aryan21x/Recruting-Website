@@ -10,9 +10,6 @@
             LastNameDESC,
             GPAASC,
             GPADSC
-
-            //GraduationDateASC,
-            //GraduationDateDESC
         }
         public enum OrderByParameter
         {

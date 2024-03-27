@@ -1,6 +1,5 @@
 ﻿using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using static EliteRecruit.Helpers.Enums;
 
 namespace EliteRecruit.Interfaces
