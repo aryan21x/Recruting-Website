@@ -99,9 +99,9 @@
                                     @schoolYearText
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }) |
-                                    @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }) |
-                                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy })
+                                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;" }) |
+                                    @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;"}) |
+                                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;"})
                                 </td>
                             </tr>
                         }
