@@ -1,8 +1,5 @@
 ﻿using EliteRecruit.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace EliteRecruit.Data.SeedData
@@ -42,14 +39,14 @@ namespace EliteRecruit.Data.SeedData
 
                         var student = new Student
                         {
-                            FirstName = values[1], 
-                            LastName = values[2], 
+                            FirstName = values[1],
+                            LastName = values[2],
                             School = values[3],
-                            GPA = Convert.ToDecimal(values[4]), 
-                            Major = values[5], 
-                            SchoolYear = values[6], 
-                            Email = values[7], 
-                            PhoneNumber = values[8] 
+                            GPA = Convert.ToDecimal(values[4]),
+                            Major = values[5],
+                            SchoolYear = values[6],
+                            Email = values[7],
+                            PhoneNumber = values[8]
                         };
 
                         context.Student.Add(student);

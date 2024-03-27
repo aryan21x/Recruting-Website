@@ -1,6 +1,6 @@
+using EliteRecruit.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using EliteRecruit.Models;
 
 namespace EliteRecruit.Controllers
 {
