@@ -62,11 +62,6 @@ namespace EliteRecruit.Repository
                 SortByParameter.LastNameDESC => students.OrderByDescending(o => o.LastName).ThenByDescending(o => o.FirstName),
                 SortByParameter.GPAASC => students.OrderBy(o => o.GPA).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
                 SortByParameter.GPADSC => students.OrderByDescending(o => o.GPA).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
-
-
-                /*SortByParameter.GraduationDateASC => students.OrderBy(o => o.GraduationYear).ThenBy(o => o.FirstName).ThenBy(o => o.LastName),
-                SortByParameter.GraduationDateDESC => students.OrderByDescending(o => o.GraduationYear).ThenByDescending(o => o.FirstName).ThenByDescending(o => o.LastName),
-                _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GraduationYear),*/
                 _ => students.OrderBy(o => o.FirstName).ThenBy(o => o.LastName).ThenBy(o => o.GPA),
             };
 
