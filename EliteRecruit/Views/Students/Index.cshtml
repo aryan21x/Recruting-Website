@@ -17,15 +17,15 @@
                         <input type="text" asp-for="@Model.FilterBy" placeholder="Enter name..." class="form-control" />
                         <button class="btn custom fas fa-search" type="submit" value=""> </button>
                         <a asp-action="Index" class="btn custom">Clear</a>
-                        <select asp-for="SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
+                        <select asp-for="@Model.SchoolYearString" asp-items="Model.GraduationYearOptions" class="btn custom drop">
                             <option value="">Year</option>
                         </select>
-                        <select asp-for="majorString" asp-items="Model.MajorList" class="btn custom drop">
+                        <select asp-for="@Model.majorString" asp-items="Model.MajorList" class="btn custom drop">
                             <option value=""> Major</option>
                         </select>
                         <a class="btn custom" id="table-view">Table View</a>
                         <a class="btn custom" id="card-view">Card View</a>
-                        @Html.ActionLink("New", "Create", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "btn custom" })
+                        @Html.ActionLink("New", "Create", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
                     </div>
                 </form>
             </div>
@@ -35,13 +35,13 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>
-                                @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" })
+                                @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" })
                             </th>
                             <th>
-                                @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" })
+                                @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" })
                             </th>
                             <th>
-                                @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" })
+                                @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" })
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.School)
@@ -99,9 +99,9 @@
                                     @schoolYearText
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;" }) |
-                                    @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;"}) |
-                                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2",style = "padding: 0;"})
+                                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                                    @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" })
                                 </td>
                             </tr>
                         }

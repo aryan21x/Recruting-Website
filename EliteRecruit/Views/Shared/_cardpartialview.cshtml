@@ -40,7 +40,11 @@
                         }
                         <p class="card-text">School Year: @schoolYearText</p>
                         <p class="card-text">Graduation Year: @Html.DisplayFor(modelItem => item.GraduationYear)</p>
-                        <a class="btn custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                        @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                        @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" })
+                    </p>
                     </div>
                 </div>
             </div>

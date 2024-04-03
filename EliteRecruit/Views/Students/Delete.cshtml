@@ -99,7 +99,6 @@
         @Html.HiddenFor(model => model.FilterBy)
         @Html.HiddenFor(model => model.SortBy)
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-        @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy })
+        @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString })
     </form>
 </div>

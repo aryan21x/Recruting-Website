@@ -165,3 +165,11 @@ body {
     background-color: navy !important;
     color: white !important;
 }
+
+#students-cards {
+    display: none;
+}
+
+#students-table {
+    display: none;
+}
