@@ -13,7 +13,7 @@ namespace EliteRecruit.Tests
     {
         private readonly SharedDatabaseFixture _fixture;
         private readonly StudentRepository _repository;
-        StudentViewModel studentViewModel = new StudentViewModel();
+        StudentViewModel studentViewModel = new();
 
         public StudentRepositoryTests(SharedDatabaseFixture fixture)
         {
@@ -25,9 +25,6 @@ namespace EliteRecruit.Tests
 
         public async Task Get_Students_FilterBy_Default()
         {
-            Assert.True(true);
-            // Arrange.
-
             // Act.
             IList<Student> students = await _repository.GetStudents(string.Empty, SortByParameter.LastNameASC, studentViewModel);
 
