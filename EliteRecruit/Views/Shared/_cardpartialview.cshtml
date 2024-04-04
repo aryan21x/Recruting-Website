@@ -41,9 +41,9 @@
                         <p class="card-text">School Year: @schoolYearText</p>
                         <p class="card-text">Graduation Year: @Html.DisplayFor(modelItem => item.GraduationYear)</p>
                     <p>
-                        @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" }) |
-                        @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" }) |
-                        @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy }, new { @class = "nav-link2", style = "padding: 0;" })
+                        @Html.ActionLink("Edit", "Edit", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                        @Html.ActionLink("Details", "Details", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" }) |
+                        @Html.ActionLink("Delete", "Delete", new { Id = item.Id, SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "nav-link2", style = "padding: 0;" })
                     </p>
                     </div>
                 </div>

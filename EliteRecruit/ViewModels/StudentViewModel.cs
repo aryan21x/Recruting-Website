@@ -116,9 +116,6 @@ namespace EliteRecruit.ViewModels
         public SortByParameter SortByLastName { get; set; }
         public SortByParameter SortBySchool { get; set; }
         public SortByParameter SortByGPA { get; set; }
-        public SortByParameter SortByMajor { get; set; }
-        public SortByParameter SortBySchoolYear { get; set; }
-        public SortByParameter SortByGraduationDate { get; set; }
     }
 }
 

@@ -29,7 +29,7 @@ namespace EliteRecruit.Controllers
 
 
         // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id, string filterBy, SortByParameter sortBy)
+        public async Task<IActionResult> Details(int? id, string filterBy, SortByParameter sortBy, string MajorString, string schoolYearString)
         {
             StudentViewModel studentViewModel;
             if (id == null)
@@ -50,7 +50,9 @@ namespace EliteRecruit.Controllers
                 studentViewModel = new(student)
                 {
                     FilterBy = filterBy,
-                    SortBy = sortBy
+                    SortBy = sortBy,
+                    majorString = MajorString,
+                    SchoolYearString = schoolYearString
                 };
             }
 
@@ -59,13 +61,15 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students/Create
-        public IActionResult Create(string filterBy, SortByParameter sortBy)
+        public IActionResult Create(string filterBy, SortByParameter sortBy,string MajorString, string schoolYearString)
         {
             //StudentViewModel studentViewModel = new();
             StudentViewModel studentViewModel = new()
             {
                 FilterBy = filterBy,
-                SortBy = sortBy
+                SortBy = sortBy,
+                majorString = MajorString,
+                SchoolYearString = schoolYearString
             };
             return View(studentViewModel);
         }
@@ -100,7 +104,7 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(int? id, string filterBy, SortByParameter sortBy)
+        public async Task<IActionResult> Edit(int? id, string filterBy, SortByParameter sortBy, string MajorString, string schoolYearString)
         {
             StudentViewModel studentViewModel;
 
@@ -121,7 +125,9 @@ namespace EliteRecruit.Controllers
                 studentViewModel = new(student)
                 {
                     FilterBy = filterBy,
-                    SortBy = sortBy
+                    SortBy = sortBy,
+                    majorString = MajorString,
+                    SchoolYearString = schoolYearString
                 };
             }
 
@@ -156,7 +162,7 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(int? id, string filterBy, SortByParameter sortBy)
+        public async Task<IActionResult> Delete(int? id, string filterBy, SortByParameter sortBy, string MajorString, string schoolYearString)
         {
             StudentViewModel studentViewModel;
 
@@ -178,7 +184,9 @@ namespace EliteRecruit.Controllers
                 studentViewModel = new(student)
                 {
                     FilterBy = filterBy,
-                    SortBy = sortBy
+                    SortBy = sortBy,
+                    majorString = MajorString,
+                    SchoolYearString = schoolYearString
                 };
             }
 
