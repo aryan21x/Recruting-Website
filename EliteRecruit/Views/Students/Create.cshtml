@@ -62,15 +62,13 @@
             <div class="form-group">
                 @Html.HiddenFor(model => model.FilterBy)
                 @Html.HiddenFor(model => model.SortBy)
-                <input type="submit" value="Create" class="btn btn-primary" />
-                @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy })
+                @Html.HiddenFor(model => model.SchoolYearString)
+                @Html.HiddenFor(model => model.majorString)
+                <input type="submit" value="Create" class="btn custom" />
+                @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
