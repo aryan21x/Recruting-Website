@@ -10,6 +10,7 @@ namespace EliteRecruit.Interfaces
         Task<Student> GetStudentByID(int studentId);
         Task<Student> InsertStudent(StudentViewModel studentViewModel);
         Task<Student> UpdateStudent(StudentViewModel studentViewModel);
-        Task DeleteStudent(int studentId);
+        Task UpdateStudentsImagePath();
+        Task DeleteStudent(int ID);
     }
 }

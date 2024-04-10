@@ -114,8 +114,12 @@ namespace EliteRecruit.ViewModels
         public SortByParameter SortBy { get; set; }
         public SortByParameter SortByFirstName { get; set; }
         public SortByParameter SortByLastName { get; set; }
-        public SortByParameter SortBySchool { get; set; }
         public SortByParameter SortByGPA { get; set; }
+
+        [Display(Name = "Image")]
+        public string ImagePath { get; set; }
+        public IFormFile Image { get; set; }
+        public bool ClearImagePath { get; set; }
     }
 }
 
