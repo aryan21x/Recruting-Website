@@ -1,4 +1,9 @@
-﻿namespace EliteRecruit.Models
+﻿
+
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace EliteRecruit.Models
 {
     public class Student
     {
@@ -6,6 +11,9 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string School { get; set; }
+
+        [Range(1, 4)]
+        [Column(TypeName = "decimal(3, 2)")]
         public decimal GPA { get; set; }
         public string Major { get; set; }
         public string SchoolYear { get; set; }
@@ -30,6 +38,7 @@
                 }
             }
         }
+        public string ImagePath { get; set; }
 
     }
 }

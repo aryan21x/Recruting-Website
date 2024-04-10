@@ -1,8 +1,11 @@
-﻿using EliteRecruit.Interfaces;
+﻿using EliteRecruit.Data;
+using EliteRecruit.Interfaces;
 using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 using static EliteRecruit.Helpers.Enums;
 
 
@@ -13,14 +16,11 @@ namespace EliteRecruit.Controllers
     {
         private readonly IStudentRepository _studentRepository = studentRepository;
 
-        // GET: Students
-
-
         public async Task<IActionResult> Index(StudentViewModel studentViewModel)
         {
-
+       
             MaintainViewState(ref studentViewModel);
-
+            await _studentRepository.UpdateStudentsImagePath();
             studentViewModel.Students = await _studentRepository.GetStudents(studentViewModel.FilterBy, studentViewModel.SortBy, studentViewModel);
 
             return View(studentViewModel);
@@ -55,8 +55,6 @@ namespace EliteRecruit.Controllers
                     SchoolYearString = schoolYearString
                 };
             }
-
-
             return View(studentViewModel);
         }
 
@@ -79,24 +77,10 @@ namespace EliteRecruit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,FilterBy,SortBy")] StudentViewModel studentViewModel)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,ImagePath,Image,FilterBy,SortBy")] StudentViewModel studentViewModel)
         {
-
             if (ModelState.IsValid)
             {
-                Student student = new()
-                {
-                    FirstName = studentViewModel.FirstName.Trim(),
-                    LastName = studentViewModel.LastName.Trim(),
-                    School = studentViewModel.School.Trim(),
-                    GPA = studentViewModel.GPA,
-                    Major = studentViewModel.Major.Trim(),
-                    SchoolYear = studentViewModel.SchoolYear,
-                    Email = studentViewModel.Email,
-                    PhoneNumber = studentViewModel.PhoneNumber
-                };
-                //_context.Add(student);
-                //await _context.SaveChangesAsync();
                 await _studentRepository.InsertStudent(studentViewModel);
                 return RedirectToAction(nameof(Index), studentViewModel);
             }
@@ -139,7 +123,7 @@ namespace EliteRecruit.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,FilterBy,SortBy")] StudentViewModel studentViewModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,ImagePath,Image,ClearImagePath,FilterBy,SortBy")] StudentViewModel studentViewModel)
         {
 
             if (id != studentViewModel.Id)
@@ -151,7 +135,6 @@ namespace EliteRecruit.Controllers
             {
                 var updatedStudent = await _studentRepository.UpdateStudent(studentViewModel);
 
-                //catch (DbUpdateConcurrencyException)
                 if (updatedStudent == null)
                 {
                     return NotFound();
@@ -197,20 +180,12 @@ namespace EliteRecruit.Controllers
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed([Bind("Id,FirstName,LastName,GraduationDate,FilterBy,SortBy")] StudentViewModel studentViewModel)
+        public async Task<IActionResult> DeleteConfirmed([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,ImagePath,Image,FilterBy,SortBy")] StudentViewModel studentViewModel)
         {
-            /*var student = await _context.Student.FindAsync(id);
-            if (student != null)
-            {
-                _context.Student.Remove(student);
-            }
-
-            await _context.SaveChangesAsync();*/
-            await _studentRepository.DeleteStudent(studentViewModel.Id);
+            await _studentRepository.DeleteStudent(studentViewModel);
             return RedirectToAction(nameof(Index), studentViewModel);
         }
 
-        //private bool StudentExists(int id)
         private static void MaintainViewState(ref StudentViewModel studentViewModel)
         {
             //return _context.Student.Any(e => e.Id == id);

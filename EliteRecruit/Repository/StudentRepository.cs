@@ -1,5 +1,6 @@
 ﻿using EliteRecruit.Data;
 using EliteRecruit.Interfaces;
+using EliteRecruit.Migrations;
 using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -77,7 +78,6 @@ namespace EliteRecruit.Repository
         {
             Student student = new()
             {
-
                 FirstName = studentViewModel.FirstName.Trim(),
                 LastName = studentViewModel.LastName.Trim(),
                 School = studentViewModel.School.Trim(),
@@ -85,18 +85,44 @@ namespace EliteRecruit.Repository
                 Major = studentViewModel.Major.Trim(),
                 SchoolYear = studentViewModel.SchoolYear,
                 Email = studentViewModel.Email,
-                PhoneNumber = studentViewModel.PhoneNumber
+                PhoneNumber = studentViewModel.PhoneNumber,
+                ImagePath = studentViewModel.ImagePath
             };
 
+            if (studentViewModel.Image != null)
+            {
+       
+                // Generate a unique file name for the uploaded image
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(studentViewModel.Image.FileName);
+
+                // Define the directory where the image will be saved
+                var uploadDirectory = Path.Combine("wwwroot","StudentImages", fileName);
+
+                var imagePath = Path.Combine("/StudentImages/", fileName);
+
+                // Save the image file to the server
+                using (var stream = new FileStream(uploadDirectory, FileMode.Create))
+                {
+                    await studentViewModel.Image.CopyToAsync(stream);
+                }
+                student.ImagePath = imagePath;
+            }
             _context.Add(student);
             await _context.SaveChangesAsync();
 
             return student;
         }
 
-        public async Task DeleteStudent(int studentID)
+        public async Task DeleteStudent(StudentViewModel studentViewModel)
         {
-            var student = _context.Student.SingleOrDefault(s => s.Id == studentID);
+            var student = _context.Student.SingleOrDefault(s => s.Id == studentViewModel.Id);
+            var imagePath = student.ImagePath;
+            var delete = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot" + imagePath);
+
+            if (File.Exists(delete))
+            {
+                File.Delete(delete);
+            }
 
             _context.Student.Remove(student);
             await _context.SaveChangesAsync();
@@ -119,9 +145,46 @@ namespace EliteRecruit.Repository
                 student.Email = studentViewModel.Email;
                 student.PhoneNumber = studentViewModel.PhoneNumber;
 
+                if(studentViewModel.ClearImagePath == true)
+                {
+                    var iPath = student.ImagePath;
+                    var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + iPath);
+
+                    if (File.Exists(delete) && delete != "/StudentImages/default.jpg")
+                    {
+                        File.Delete(delete);
+                    }
+                    student.ImagePath = "/StudentImages/default.jpg";
+                }
+
+                if (studentViewModel.Image != null)
+                {
+                    var iPath = student.ImagePath;
+                    var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + iPath);
+
+                    if (File.Exists(delete) && delete != "/StudentImages/default.jpg")
+                    {
+                        File.Delete(delete);
+                    }
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(studentViewModel.Image.FileName);
+
+                    var uploadDirectory = Path.Combine("wwwroot", "StudentImages",fileName);
+
+                    var imagePath = Path.Combine("/StudentImages/", fileName);
+
+                    using (var stream = new FileStream(uploadDirectory, FileMode.Create))
+                    {
+                        await studentViewModel.Image.CopyToAsync(stream);
+                    }
+                    student.ImagePath = imagePath;
+                }
+
                 _context.Update(student);
                 await _context.SaveChangesAsync();
             }
+
+
             catch (DbUpdateConcurrencyException)
             {
                 if (!StudentExists(studentViewModel.Id))
@@ -141,7 +204,10 @@ namespace EliteRecruit.Repository
         {
             return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
+        public async Task UpdateStudentsImagePath()
+        {
+            await _context.Database.ExecuteSqlRawAsync("UPDATE Student SET ImagePath = '/StudentImages/default.jpg' WHERE ImagePath IS NULL");
+        }
 
     }
 }
