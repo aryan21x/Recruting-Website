@@ -180,9 +180,9 @@ namespace EliteRecruit.Controllers
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,ImagePath,Image,FilterBy,SortBy")] StudentViewModel studentViewModel)
+        public async Task<IActionResult> DeleteConfirmed([Bind("Id,FirstName,LastName,School,GPA,Major,SchoolYear,Email,PhoneNumber,ImagePath,Image,ClearImagePath,FilterBy,SortBy")] StudentViewModel studentViewModel)
         {
-            await _studentRepository.DeleteStudent(studentViewModel);
+            await _studentRepository.DeleteStudent(studentViewModel.Id);
             return RedirectToAction(nameof(Index), studentViewModel);
         }
 

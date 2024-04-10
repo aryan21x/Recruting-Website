@@ -113,13 +113,13 @@ namespace EliteRecruit.Repository
             return student;
         }
 
-        public async Task DeleteStudent(StudentViewModel studentViewModel)
+        public async Task DeleteStudent(int ID)
         {
-            var student = _context.Student.SingleOrDefault(s => s.Id == studentViewModel.Id);
+            var student = _context.Student.SingleOrDefault(s => s.Id == ID);
             var imagePath = student.ImagePath;
-            var delete = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot" + imagePath);
+            var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + imagePath);
 
-            if (File.Exists(delete))
+            if (File.Exists(delete) && imagePath != "/StudentImages/default.jpg")
             {
                 File.Delete(delete);
             }
@@ -150,7 +150,7 @@ namespace EliteRecruit.Repository
                     var iPath = student.ImagePath;
                     var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + iPath);
 
-                    if (File.Exists(delete) && delete != "/StudentImages/default.jpg")
+                    if (File.Exists(delete) && iPath != "/StudentImages/default.jpg")
                     {
                         File.Delete(delete);
                     }
@@ -162,7 +162,7 @@ namespace EliteRecruit.Repository
                     var iPath = student.ImagePath;
                     var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + iPath);
 
-                    if (File.Exists(delete) && delete != "/StudentImages/default.jpg")
+                    if (File.Exists(delete) && iPath != "/StudentImages/default.jpg")
                     {
                         File.Delete(delete);
                     }
