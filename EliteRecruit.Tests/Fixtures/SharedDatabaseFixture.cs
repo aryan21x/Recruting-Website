@@ -40,7 +40,7 @@ namespace EliteRecruit.Tests.Fixture
             get;
         }
 
-        public EliteRecruitContext CreateContext(DbTransaction transaction = null)
+        public EliteRecruitContext CreateContext(DbTransaction? transaction = null)
         {
             var context = new EliteRecruitContext(new DbContextOptionsBuilder<EliteRecruitContext>()
                 .UseSqlServer(Connection).Options);
