@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EliteRecruit.Migrations
 {
     [DbContext(typeof(EliteRecruitContext))]
-    [Migration("20240408191831_new")]
+    [Migration("20240411023434_new")]
     partial class @new
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace EliteRecruit.Migrations
 
                     b.Property<decimal>("GPA")
                         .HasColumnType("decimal(3, 2)");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");

@@ -209,5 +209,10 @@ namespace EliteRecruit.Repository
             await _context.Database.ExecuteSqlRawAsync("UPDATE Student SET ImagePath = '/StudentImages/default.jpg' WHERE ImagePath IS NULL");
         }
 
+        public async Task<IList<Student>> GetTop5StudentsByGPA()
+        {
+            return await _context.Student.OrderByDescending(s => s.GPA).Take(7).ToListAsync();
+        }
+
     }
 }
