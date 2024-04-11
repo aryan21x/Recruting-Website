@@ -120,6 +120,7 @@ namespace EliteRecruit.ViewModels
         public string ImagePath { get; set; }
         public IFormFile Image { get; set; }
         public bool ClearImagePath { get; set; }
+        public List<Student> Top5Students { get; set; }
     }
 }
 
