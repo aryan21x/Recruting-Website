@@ -9,21 +9,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account.Manage
 {
-    public class IndexModel : PageModel
+    public class IndexModel(
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager) : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-
-        public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -51,6 +46,18 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Title")]
+            public string Title { get; set; }
+
+            [Display(Name = "Company Name")]
+            public string CompanyName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -60,7 +67,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -69,6 +76,10 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Title = user.Title,
+                CompanyName = user.CompanyName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -108,6 +119,18 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            user.FirstName = string.IsNullOrEmpty(Input.FirstName) ? "" : Input.FirstName.Trim();
+            user.LastName = string.IsNullOrEmpty(Input.LastName) ? "" : Input.LastName.Trim();
+            user.Title = string.IsNullOrEmpty(Input.Title) ? "" : Input.Title.Trim();
+            user.CompanyName = string.IsNullOrEmpty(Input.CompanyName) ? "" : Input.CompanyName.Trim();
+
+            var updateUserResult = await _userManager.UpdateAsync(user);
+            if (!updateUserResult.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to update user.";
+                return RedirectToPage();
             }
 
             await _signInManager.RefreshSignInAsync(user);

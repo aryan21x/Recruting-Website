@@ -11,20 +11,14 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterConfirmationModel : PageModel
+    public class RegisterConfirmationModel(UserManager<ApplicationUser> userManager) : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IEmailSender _sender;
-
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
-        {
-            _userManager = userManager;
-            _sender = sender;
-        }
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

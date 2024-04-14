@@ -13,26 +13,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account.Manage
 {
-    public class EnableAuthenticatorModel : PageModel
+    public class EnableAuthenticatorModel(
+        UserManager<ApplicationUser> userManager,
+        ILogger<EnableAuthenticatorModel> logger,
+        UrlEncoder urlEncoder) : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<EnableAuthenticatorModel> _logger;
-        private readonly UrlEncoder _urlEncoder;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly ILogger<EnableAuthenticatorModel> _logger = logger;
+        private readonly UrlEncoder _urlEncoder = urlEncoder;
 
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
-
-        public EnableAuthenticatorModel(
-            UserManager<IdentityUser> userManager,
-            ILogger<EnableAuthenticatorModel> logger,
-            UrlEncoder urlEncoder)
-        {
-            _userManager = userManager;
-            _logger = logger;
-            _urlEncoder = urlEncoder;
-        }
+        private const string AUTHENTICATORURIFORMAT = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -142,7 +136,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             }
         }
 
-        private async Task LoadSharedKeyAndQrCodeUriAsync(IdentityUser user)
+        private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user)
         {
             // Load the authenticator key & QR code URI to display on the form
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
@@ -158,7 +152,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
         }
 
-        private string FormatKey(string unformattedKey)
+        private static string FormatKey(string unformattedKey)
         {
             var result = new StringBuilder();
             int currentPosition = 0;
@@ -179,7 +173,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                AuthenticatorUriFormat,
+                AUTHENTICATORURIFORMAT,
                 _urlEncoder.Encode("Microsoft.AspNetCore.Identity.UI"),
                 _urlEncoder.Encode(email),
                 unformattedKey);

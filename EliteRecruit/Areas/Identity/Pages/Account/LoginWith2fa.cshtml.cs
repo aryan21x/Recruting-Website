@@ -11,24 +11,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account
 {
-    public class LoginWith2faModel : PageModel
+    public class LoginWith2faModel(
+        SignInManager<ApplicationUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        ILogger<LoginWith2faModel> logger) : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<LoginWith2faModel> _logger;
-
-        public LoginWith2faModel(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
-            ILogger<LoginWith2faModel> logger)
-        {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _logger = logger;
-        }
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly ILogger<LoginWith2faModel> _logger = logger;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -76,12 +70,8 @@ namespace Team18.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
-            if (user == null)
-            {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
-            }
+            _ = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new 
+                InvalidOperationException($"Unable to load two-factor authentication user.");
 
             ReturnUrl = returnUrl;
             RememberMe = rememberMe;
@@ -96,19 +86,16 @@ namespace Team18.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
-            }
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new 
+                InvalidOperationException($"Unable to load two-factor authentication user.");
 
             var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, Input.RememberMachine);
 
-            var userId = await _userManager.GetUserIdAsync(user);
+            _ = await _userManager.GetUserIdAsync(user);
 
             if (result.Succeeded)
             {

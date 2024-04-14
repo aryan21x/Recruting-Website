@@ -12,24 +12,16 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account.Manage
 {
-    public class EmailModel : PageModel
+    public class EmailModel(
+        UserManager<ApplicationUser> userManager,
+        IEmailSender emailSender) : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-
-        public EmailModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _emailSender = emailSender;
-        }
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly IEmailSender _emailSender = emailSender;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -73,7 +65,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;
@@ -121,7 +113,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
-                    values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
+                    values: new { area = "Identity", userId, email = Input.NewEmail, code },
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
@@ -157,7 +149,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code },
+                values: new { area = "Identity", userId, code },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
