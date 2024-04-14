@@ -7,34 +7,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<head class="carousel">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,user-scalable=no" />
-    <title>3D Carousel</title>
-
 </head>
 
-<body class="font carousel">
-    <div id="backgroundimage">
-        <img class="logo" src="pics/favicon.jpg" alt="Background Image">
+<body class="font home">
+    <section id="home">
+        <!--<img class="logo" src="pics/favicon.jpg" alt="Background Image"> -->
         <div class=" text-center mb-5">
-            <h1 class="display-4">EliteRecruit</h1>
-            <h8>Connecting Talent to Opportunity!</h8>
+            <h1 class="display-4 size" style="color:navy;">EliteRecruit</h1>
+            <h8 class="lighter"style="color:navy;">Connecting Talent to Opportunity!</h8>
             @if (!SignInManager.IsSignedIn(User))
             {
-
                 <div class="intro-buttons">
                     <a class="btn nologinbtn" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                    <a class="btn nologinbtn" text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    <a class="btn nologinbtn" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
                 </div>
             }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="intro-buttons">
+                    <a class="btn nologinbtn" href="#imageRing">Top Students</a>
+                    <a class="btn nologinbtn" asp-controller="Students" asp-action="Index">Students</a>
+                </div>
+            }
+
         </div>
+    </section>
 
-    </div>
-
-    @await Html.PartialAsync("_carousel")
+    <section class="imageRing" id="imageRing">
+        <div style="padding-top: 20px;">
+            <h2 style="color:navy;text-align:center">Top Performing Students</h2>
+            <hr style="width: 30%; margin: auto; margin-bottom: 20px;color:navy;">
+        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="carousel">
+                @await Html.PartialAsync("_carousel")
+            </div>
+        }
+    </section>
 
 </body>
+
+
 
 
 @section Scripts{
@@ -43,7 +60,7 @@
         // Github verson (1 file .html): https://github.com/HoangTran0410/3DCarousel/blob/master/index.html
 
         // You can change global variables here:
-        var radius = 360; // how big of the radius default:240
+        var radius = 260; // how big of the radius default:240
         var autoRotate = true; // auto rotate or not
         var rotateSpeed = -60; // unit: seconds/360 degrees
         var imgWidth = 240; // width of images (unit: px) default: 120
@@ -53,14 +70,6 @@
         var bgMusicURL = null;
         //"https://api.soundcloud.com/tracks/143041228/stream?client_id=587aa2d384f7333a886010d5f52f302a";
         var bgMusicControls = false; // Show UI music control
-
-        /*
-        NOTE:
-         + imgWidth, imgHeight will work for video
-         + if imgWidth, imgHeight too small, play/pause button in <video> will be hidden
-         + Music link are taken from: https://hoangtran0410.github.io/Visualyze-design-your-own-/?theme=HauMaster&playlist=1&song=1&background=28
-         + Custom from code in tiktok video  https://www.facebook.com/J2TEAM.ManhTuan/videos/1353367338135935/
-        */
 
         // ===================== start =======================
         setTimeout(init, 100);
@@ -173,10 +182,12 @@
         };
 
         document.onmousewheel = function (e) {
+            /*
             e = e || window.event;
             var d = e.wheelDelta / 20 || -e.detail;
             radius += d;
             init(1);
+            */
         };
     </script>
 }
