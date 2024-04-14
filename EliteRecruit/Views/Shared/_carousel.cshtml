@@ -7,7 +7,7 @@
     <div id="spin-container">
         @foreach (var student in Model.Top5Students)
         {
-            <a class="carousel" href="@Url.Action("Details", "Students", new { id = student.Id })">
+            <a href="@Url.Action("Details", "Students", new { id = student.Id })">
                 <img src="@student.ImagePath" alt="Student Image" />
             </a>
         }
