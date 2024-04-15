@@ -2,16 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using EliteRecruit.Models.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account.Manage
 {
@@ -112,7 +107,7 @@ namespace Team18.Areas.Identity.Pages.Account.Manage
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
-            var info = await _signInManager.GetExternalLoginInfoAsync(userId) ?? throw new 
+            var info = await _signInManager.GetExternalLoginInfoAsync(userId) ?? throw new
                 InvalidOperationException($"Unexpected error occurred loading external login info.");
 
             var result = await _userManager.AddLoginAsync(user, info);

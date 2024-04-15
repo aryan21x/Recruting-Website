@@ -2,16 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using EliteRecruit.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using EliteRecruit.Models.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Team18.Areas.Identity.Pages.Account
 {
@@ -70,7 +65,7 @@ namespace Team18.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            _ = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new 
+            _ = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new
                 InvalidOperationException($"Unable to load two-factor authentication user.");
 
             ReturnUrl = returnUrl;
@@ -88,7 +83,7 @@ namespace Team18.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new 
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new
                 InvalidOperationException($"Unable to load two-factor authentication user.");
 
             var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);

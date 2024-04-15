@@ -1,21 +1,20 @@
 using EliteRecruit.Interfaces;
 using EliteRecruit.Models;
+using EliteRecruit.Models.Identity;
+using EliteRecruit.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using EliteRecruit.Repository;
-using EliteRecruit.ViewModels;
-using EliteRecruit.Models.Identity;
-using Microsoft.AspNetCore.Identity;
 
 namespace EliteRecruit.Controllers
 {
-    public class HomeController: Controller
+    public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStudentRepository _studentRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(UserManager<ApplicationUser> userManager,ILogger<HomeController> logger, IStudentRepository studentRepository)
+        public HomeController(UserManager<ApplicationUser> userManager, ILogger<HomeController> logger, IStudentRepository studentRepository)
         {
             _userManager = userManager;
             _logger = logger;
