@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EliteRecruit.Migrations
 {
     /// <inheritdoc />
-    public partial class createIdentity : Migration
+    public partial class applicationUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

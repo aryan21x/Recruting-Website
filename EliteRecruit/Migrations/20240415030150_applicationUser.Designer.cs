@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EliteRecruit.Migrations
 {
     [DbContext(typeof(EliteRecruitContext))]
-    [Migration("20240415020355_createIdentity")]
-    partial class createIdentity
+    [Migration("20240415030150_applicationUser")]
+    partial class applicationUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
