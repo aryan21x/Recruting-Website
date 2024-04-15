@@ -1,6 +1,5 @@
 ﻿using EliteRecruit.Data;
 using EliteRecruit.Interfaces;
-using EliteRecruit.Migrations;
 using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -91,12 +90,12 @@ namespace EliteRecruit.Repository
 
             if (studentViewModel.Image != null)
             {
-       
+
                 // Generate a unique file name for the uploaded image
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(studentViewModel.Image.FileName);
 
                 // Define the directory where the image will be saved
-                var uploadDirectory = Path.Combine("wwwroot","StudentImages", fileName);
+                var uploadDirectory = Path.Combine("wwwroot", "StudentImages", fileName);
 
                 var imagePath = Path.Combine("/StudentImages/", fileName);
 
@@ -145,7 +144,7 @@ namespace EliteRecruit.Repository
                 student.Email = studentViewModel.Email;
                 student.PhoneNumber = studentViewModel.PhoneNumber;
 
-                if(studentViewModel.ClearImagePath == true)
+                if (studentViewModel.ClearImagePath == true)
                 {
                     var iPath = student.ImagePath;
                     var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + iPath);
@@ -169,7 +168,7 @@ namespace EliteRecruit.Repository
 
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(studentViewModel.Image.FileName);
 
-                    var uploadDirectory = Path.Combine("wwwroot", "StudentImages",fileName);
+                    var uploadDirectory = Path.Combine("wwwroot", "StudentImages", fileName);
 
                     var imagePath = Path.Combine("/StudentImages/", fileName);
 

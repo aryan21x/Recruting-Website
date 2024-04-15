@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EliteRecruit.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SendGrid.Helpers.Mail;
-using EliteRecruit.Models.Identity;
 
 
 namespace EliteRecruit.Data
