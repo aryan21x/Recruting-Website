@@ -1,11 +1,7 @@
-﻿using EliteRecruit.Data;
-using EliteRecruit.Interfaces;
-using EliteRecruit.Models;
+﻿using EliteRecruit.Interfaces;
 using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SendGrid.Helpers.Mail;
 using static EliteRecruit.Helpers.Enums;
 
 
@@ -18,7 +14,7 @@ namespace EliteRecruit.Controllers
 
         public async Task<IActionResult> Index(StudentViewModel studentViewModel)
         {
-       
+
             MaintainViewState(ref studentViewModel);
             await _studentRepository.UpdateStudentsImagePath();
             studentViewModel.Students = await _studentRepository.GetStudents(studentViewModel.FilterBy, studentViewModel.SortBy, studentViewModel);
@@ -59,7 +55,7 @@ namespace EliteRecruit.Controllers
         }
 
         // GET: Students/Create
-        public IActionResult Create(string filterBy, SortByParameter sortBy,string MajorString, string schoolYearString)
+        public IActionResult Create(string filterBy, SortByParameter sortBy, string MajorString, string schoolYearString)
         {
             //StudentViewModel studentViewModel = new();
             StudentViewModel studentViewModel = new()
