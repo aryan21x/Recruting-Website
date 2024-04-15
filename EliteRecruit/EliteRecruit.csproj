@@ -34,8 +34,4 @@
     <Page Include="Data\SeedData\seedData.csv" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Migrations\" />
-	</ItemGroup>
-
 </Project>

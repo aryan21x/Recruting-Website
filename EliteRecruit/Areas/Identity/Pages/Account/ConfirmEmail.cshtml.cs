@@ -11,17 +11,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using EliteRecruit.Models.Identity;
 
 namespace Team18.Areas.Identity.Pages.Account
 {
-    public class ConfirmEmailModel : PageModel
+    public class ConfirmEmailModel(UserManager<ApplicationUser> userManager) : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager)
-        {
-            _userManager = userManager;
-        }
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
