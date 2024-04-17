@@ -3,6 +3,15 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:Team18Context"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "EliteRecruitContext"
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:EliteRecruitContext",
+      "dynamicId": null
     }
   }
 }
