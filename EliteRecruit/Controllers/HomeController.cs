@@ -5,6 +5,7 @@ using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace EliteRecruit.Controllers
 {
@@ -32,6 +33,13 @@ namespace EliteRecruit.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             return View(user);
+        }
+
+        public async Task<IActionResult> Carousel()
+        {
+            var top5Students = await _studentRepository.GetTop5StudentsByGPA();
+            var viewModel = new StudentViewModel { Top5Students = (List<Student>)top5Students };
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
