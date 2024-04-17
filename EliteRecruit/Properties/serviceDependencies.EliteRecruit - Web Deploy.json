@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql3": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/EliteRecruit/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsEliteRecruitContext_080FA63725",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/eliterecruitdbserver/databases/EliteRecruit_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:EliteRecruitContext",
+      "dynamicId": null
+    }
+  }
+}

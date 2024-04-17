@@ -107,7 +107,7 @@ namespace EliteRecruit.ViewModels
                 new SelectListItem { Value = "2", Text = "2026" },
                 new SelectListItem { Value = "3", Text = "2025" },
                 new SelectListItem { Value = "4", Text = "2024" },
-                new SelectListItem { Value = "5", Text = "2026G" }
+                new SelectListItem { Value = "5", Text = "Graduate" }
             };
 
         public string FilterBy { get; set; }
