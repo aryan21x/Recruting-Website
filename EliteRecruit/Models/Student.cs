@@ -39,6 +39,7 @@ namespace EliteRecruit.Models
             }
         }
         public string ImagePath { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }
