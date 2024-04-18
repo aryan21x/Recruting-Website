@@ -12,5 +12,7 @@ namespace EliteRecruit.Tests.Helpers
         public const decimal GPA_1 = 3.94M;
         public const decimal GPA_2 = 2.8M;
         public const decimal GPA_3 = 3.75M;
+
+        public const string COMMENT_TEXT = "This is a test comment.";
     }
 }

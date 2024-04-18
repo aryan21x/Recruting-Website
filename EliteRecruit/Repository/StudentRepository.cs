@@ -70,7 +70,10 @@ namespace EliteRecruit.Repository
 
         public async Task<Student> GetStudentByID(int studentId)
         {
-            return await _context.Student.FirstOrDefaultAsync(s => s.Id == studentId);
+            return await _context.Student
+                .Include(c => c.Comments.OrderByDescending(o => o.EnteredOn))
+                .ThenInclude(u => u.ApplicationUser)
+                .FirstOrDefaultAsync(s => s.Id == studentId);
         }
 
         public async Task<Student> InsertStudent(StudentViewModel studentViewModel)
@@ -114,7 +117,9 @@ namespace EliteRecruit.Repository
 
         public async Task DeleteStudent(int ID)
         {
-            var student = _context.Student.SingleOrDefault(s => s.Id == ID);
+            var student = _context.Student.Include(c => c.Comments).SingleOrDefault(s => s.Id == ID);
+            _context.Comment.RemoveRange(student.Comments);
+
             var imagePath = student.ImagePath;
             var delete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + imagePath);
 
@@ -197,6 +202,39 @@ namespace EliteRecruit.Repository
             }
 
             return student;
+        }
+
+        public async Task<Comment> GetCommentByID(int commentId)
+        {
+            return await _context.Comment.FirstOrDefaultAsync(c => c.Id == commentId);
+        }
+
+        public async Task<Comment> InsertComment(CommentViewModel commentViewModel)
+        {
+            Student student = await _context.Student.FindAsync(commentViewModel.StudentId);
+
+            Comment comment = new()
+            {
+                Student = student,
+                ApplicationUser = commentViewModel.CommentEnteredBy,
+                EnteredOn = commentViewModel.CommentEnteredOn,
+                Text = commentViewModel.CommentText.Trim()
+            };
+
+            _context.Comment.Add(comment);
+
+            await _context.SaveChangesAsync();
+
+            return comment;
+        }
+
+        public async Task DeleteCommentByID(int commentId)
+        {
+            Comment comment = await _context.Comment.SingleOrDefaultAsync(c => c.Id == commentId);
+
+            _context.Comment.Remove(comment);
+
+            await _context.SaveChangesAsync();
         }
 
         private bool StudentExists(int id)

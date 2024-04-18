@@ -5,6 +5,10 @@ namespace EliteRecruit.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            Text = string.Empty;
+        }
         public int Id { get; set; }
 
         public DateTime EnteredOn { get; set; }
