@@ -338,5 +338,101 @@ namespace EliteRecruit.Tests
             Assert.Null(student);
         }
 
+        [Fact]
+        public async Task Get_Comment_ById()
+        {
+            // Arrange.
+            int studentId = 1;
+
+            // Act and Assert.
+            Student student = await _repository.GetStudentByID(studentId);
+            Assert.Single(student.Comments);
+
+            if (student.Comments.Count > 0)
+            {
+                Comment comment = await _repository.GetCommentByID(student.Comments.First().Id);
+                Assert.Equal(Constants.COMMENT_TEXT, comment.Text);
+            }
+        }
+
+        [Fact]
+        public async Task Insert_Comment()
+        {
+            // Arrange.
+            int studentId = 1;
+            DateTime commentEnteredOn = DateTime.Now;
+            string commentText = "Good interview.";
+
+            var viewModel = new CommentViewModel
+            {
+                StudentId = studentId,
+                CommentEnteredOn = commentEnteredOn,
+                CommentEnteredBy = null,
+                CommentText = commentText
+            };
+
+            // Act.
+            Comment comment = await _repository.InsertComment(viewModel);
+
+            // Assert.
+            Assert.Equal(commentEnteredOn, comment.EnteredOn);
+            Assert.Equal(commentText, comment.Text);
+
+            // Cleanup.
+            await _repository.DeleteCommentByID(comment.Id);
+        }
+        [Fact]
+        public async Task Edit_Comment_ById()
+        {
+            // Arrange.
+            int studentId = 2;
+            string editCommentText = "This comment was edited.";
+
+            // Act.
+            Student student = await _repository.GetStudentByID(studentId);
+            Comment currentComment = student.Comments.First();
+
+            var viewModel = new CommentViewModel
+            {
+                Id = currentComment.Id,
+                StudentId = studentId,
+                CommentText = editCommentText
+            };
+
+            Comment editComment = await _repository.EditComment(viewModel);
+
+            // Assert.
+            Assert.Equal(editCommentText, editComment.Text);
+            Assert.NotEqual(Constants.COMMENT_TEXT, editComment.Text);
+
+        }
+
+
+        [Fact]
+        public async Task Delete_Comment_ById()
+        {
+            // Arrange.
+            int studentId = 2;
+            DateTime commentEnteredOn = DateTime.Now;
+            string commentText = "Bad interview.";
+
+            var viewModel = new CommentViewModel
+            {
+                StudentId = studentId,
+                CommentEnteredOn = commentEnteredOn,
+                CommentEnteredBy = null,
+                CommentText = commentText
+            };
+
+            Comment comment = await _repository.InsertComment(viewModel);
+
+            // Act.
+            await _repository.DeleteCommentByID(comment.Id);
+            Comment nullComment = await _repository.GetCommentByID(comment.Id);
+
+            // Assert.
+            Assert.Null(nullComment);
+        }
+
     }
 }

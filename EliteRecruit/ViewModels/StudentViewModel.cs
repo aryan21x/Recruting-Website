@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static EliteRecruit.Helpers.Enums;
+using EliteRecruit.Models.Identity;
+using System.Xml.Linq;
+using System.ComponentModel;
 
 namespace EliteRecruit.ViewModels
 {
@@ -26,6 +29,8 @@ namespace EliteRecruit.ViewModels
                 SchoolYear = student.SchoolYear;
                 Email = student.Email;
                 PhoneNumber = student.PhoneNumber;
+                ImagePath = student.ImagePath;
+                Comments = student.Comments;
             }
         }
 
@@ -87,12 +92,22 @@ namespace EliteRecruit.ViewModels
             }
 
         }
+
+        [DisplayName("Comment")]
+        public string CommentText { get; set; } = string.Empty;
+
+        [DisplayName("Date")]
+        public DateTime CommentEnteredOn { get; set; }
+
+        [DisplayName("User")]
+        public ApplicationUser CommentEnteredBy { get; set; }
         public string FullName
         {
             get { return string.Concat(FirstName, " ", LastName); }
         }
 
         public IEnumerable<Student> Students { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
         public string searchString { get; set; }
 
         public SelectList SchoolYearList { get; set; }

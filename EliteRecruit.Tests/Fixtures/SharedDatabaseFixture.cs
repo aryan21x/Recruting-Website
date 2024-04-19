@@ -66,6 +66,12 @@ namespace EliteRecruit.Tests.Fixture
 
                         AddStudents(context);
                         context.SaveChanges();
+
+                        foreach (var student in context.Student.ToArray())
+                        {
+                            AddComment(context, student);
+                        }
+                        context.SaveChanges();
                     }
 
                     _databaseInitialized = true;
@@ -81,5 +87,19 @@ namespace EliteRecruit.Tests.Fixture
                     new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_2, GPA = Constants.GPA_2 },
                     new Student { FirstName = Constants.FIRST_NAME, LastName = Constants.LAST_NAME_3, GPA = Constants.GPA_3 });
         }
+
+        private static void AddComment(EliteRecruitContext context, Student student)
+        {
+            context.Comment
+                .Add(
+                    new Comment
+                    {
+                        EnteredOn = DateTime.Now,
+                        Text = Constants.COMMENT_TEXT,
+                        Student = student,
+                        ApplicationUser = context.Users.FirstOrDefault()
+                    });
+        }
+
     }
 }
