@@ -1,15 +1,18 @@
 ﻿using EliteRecruit.Interfaces;
 using EliteRecruit.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static EliteRecruit.Helpers.Enums;
+using EliteRecruit.Models.Identity;
 
 
 namespace EliteRecruit.Controllers
 {
     [Authorize]
-    public class StudentsController(IStudentRepository studentRepository) : Controller
+    public class StudentsController(UserManager<ApplicationUser> userManager, IStudentRepository studentRepository) : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly IStudentRepository _studentRepository = studentRepository;
 
         public async Task<IActionResult> Index(StudentViewModel studentViewModel)
@@ -21,8 +24,6 @@ namespace EliteRecruit.Controllers
 
             return View(studentViewModel);
         }
-
-
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id, string filterBy, SortByParameter sortBy, string MajorString, string schoolYearString)
@@ -180,6 +181,64 @@ namespace EliteRecruit.Controllers
         {
             await _studentRepository.DeleteStudent(studentViewModel.Id);
             return RedirectToAction(nameof(Index), studentViewModel);
+        }
+
+        // GET: Student/CreateComment
+        public IActionResult CreateComment(int studentId, string studentFirstName, string studentLastName)
+        {
+            CommentViewModel commentViewModel = new()
+            {
+                StudentId = studentId,
+                StudentFirstName = studentFirstName,
+                StudentLastName = studentLastName
+            };
+
+            return View(commentViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateComment([Bind("StudentId,CommentText")] CommentViewModel commentViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                commentViewModel.CommentEnteredOn = DateTime.Now;
+                commentViewModel.CommentEnteredBy = await _userManager.GetUserAsync(User);
+                await _studentRepository.InsertComment(commentViewModel);
+                return RedirectToAction(nameof(Details), new { Id = commentViewModel.StudentId });
+            }
+            return View();
+        }
+
+        // GET: Student/DeleteComment/5
+        public async Task<IActionResult> DeleteComment(int id, int studentId)
+        {
+            await _studentRepository.DeleteCommentByID(id);
+            return RedirectToAction(nameof(Details), new { Id = studentId });
+        }
+
+        public IActionResult EditComment(int id, string commentText, int studentId)
+        {
+            CommentViewModel commentViewModel = new()
+            {
+                Id = id,
+                CommentText = commentText,
+                StudentId = studentId,
+            };
+
+            return View(commentViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditComment([Bind("Id,StudentId,CommentText")] CommentViewModel commentViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _studentRepository.EditComment(commentViewModel);
+                return RedirectToAction(nameof(Details), new { Id = commentViewModel.StudentId });
+            }
+            return View();
         }
 
         private static void MaintainViewState(ref StudentViewModel studentViewModel)

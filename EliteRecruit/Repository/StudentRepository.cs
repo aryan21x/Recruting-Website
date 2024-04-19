@@ -237,6 +237,19 @@ namespace EliteRecruit.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Comment> EditComment(CommentViewModel commentViewModel)
+        {
+            Comment comment = await _context.Comment.FirstOrDefaultAsync(c => c.Id == commentViewModel.Id);
+
+            comment.Text = commentViewModel.CommentText;
+
+            _context.Comment.Update(comment);
+
+            await _context.SaveChangesAsync();
+
+            return comment;
+        }
+
         private bool StudentExists(int id)
         {
             return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();

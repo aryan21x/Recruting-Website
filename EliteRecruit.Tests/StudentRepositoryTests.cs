@@ -381,6 +381,32 @@ namespace EliteRecruit.Tests
             // Cleanup.
             await _repository.DeleteCommentByID(comment.Id);
         }
+        [Fact]
+        public async Task Edit_Comment_ById()
+        {
+            // Arrange.
+            int studentId = 2;
+            string editCommentText = "This comment was edited.";
+
+            // Act.
+            Student student = await _repository.GetStudentByID(studentId);
+            Comment currentComment = student.Comments.First();
+
+            var viewModel = new CommentViewModel
+            {
+                Id = currentComment.Id,
+                StudentId = studentId,
+                CommentText = editCommentText
+            };
+
+            Comment editComment = await _repository.EditComment(viewModel);
+
+            // Assert.
+            Assert.Equal(editCommentText, editComment.Text);
+            Assert.NotEqual(Constants.COMMENT_TEXT, editComment.Text);
+
+        }
+
 
         [Fact]
         public async Task Delete_Comment_ById()

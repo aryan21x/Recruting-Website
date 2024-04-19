@@ -14,7 +14,9 @@ namespace EliteRecruit.Interfaces
         Task DeleteStudent(int ID);
         Task<IList<Student>> GetTop5StudentsByGPA();
         Task<Comment> GetCommentByID(int commentId);
+        Task<Comment> EditComment(CommentViewModel commentViewModel);
         Task<Comment> InsertComment(CommentViewModel commentViewModel);
         Task DeleteCommentByID(int commentId);
+
     }
 }
