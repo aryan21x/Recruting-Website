@@ -1,0 +1,40 @@
+﻿@model EliteRecruit.ViewModels.CommentViewModel
+
+@{
+    ViewData["Title"] = "Comment";
+}
+
+<h1>
+    Add Comment
+</h1>
+<h4>
+    @Html.DisplayFor(model => model.FullName)
+</h4>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Students" asp-action="CreateComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CommentText" class="control-label"></label>
+                <textarea asp-for="CommentText" class="form-control"rows="11"></textarea>
+                <span asp-validation-for="CommentText" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-2">
+                @Html.HiddenFor(Model => Model.StudentId)
+                @Html.HiddenFor(model => model.StudentFirstName)
+                @Html.HiddenFor(model => model.StudentLastName)
+                <input type="submit" value="Add Comment" class="btn custom" />
+                @Html.ActionLink("Cancel", "Details", new { id = Model.StudentId },new { @class = "btn custom2" })
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
