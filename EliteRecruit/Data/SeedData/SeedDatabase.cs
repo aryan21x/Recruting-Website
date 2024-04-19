@@ -31,7 +31,7 @@ namespace EliteRecruit.Data.SeedData
                 {
                     // Skip the header row
                     reader.ReadLine();
-
+                    int count = 1;
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
@@ -48,10 +48,33 @@ namespace EliteRecruit.Data.SeedData
                             Email = values[7],
                             PhoneNumber = values[8]
                         };
+                        // Assuming the image path is the last column in the CSV
+                        string imagePath = "wwwroot\\SeedImages\\"+count.ToString()+".jpg";
+                        count++;
 
+                        // Process and save the image
+                        if (!string.IsNullOrEmpty(imagePath))
+                        {
+                            // Generate a unique file name for the uploaded image
+                            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagePath);
+
+                            // Define the directory where the image will be saved
+                            var uploadDirectory = Path.Combine("wwwroot", "StudentImages", fileName);
+
+                            // Save the image file to the server
+                            using (var imageStream = File.OpenRead(imagePath))
+                            {
+                                using (var fileStream = new FileStream(uploadDirectory, FileMode.Create))
+                                {
+                                    imageStream.CopyTo(fileStream);
+                                }
+                            }
+                            student.ImagePath = Path.Combine("/StudentImages/", fileName);
+                        }
                         context.Student.Add(student);
                     }
                 }
+
             }
 
             context.SaveChanges();
