@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\SeedImages\1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Data\SeedData\seedData.csv" />
   </ItemGroup>
 
@@ -32,6 +36,10 @@
 
   <ItemGroup>
     <Page Include="Data\SeedData\seedData.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\SeedImages\1.jpg" />
   </ItemGroup>
 
 </Project>
