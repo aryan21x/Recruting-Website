@@ -40,6 +40,7 @@ namespace EliteRecruit.Models
         }
         public string ImagePath { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual PipelineStatus PipelineStatus { get; set; }
 
     }
 }

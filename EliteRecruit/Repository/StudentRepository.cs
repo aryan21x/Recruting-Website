@@ -73,6 +73,7 @@ namespace EliteRecruit.Repository
             return await _context.Student
                 .Include(c => c.Comments.OrderByDescending(o => o.EnteredOn))
                 .ThenInclude(u => u.ApplicationUser)
+                .Include(p => p.PipelineStatus)
                 .FirstOrDefaultAsync(s => s.Id == studentId);
         }
 
@@ -262,6 +263,40 @@ namespace EliteRecruit.Repository
         public async Task<IList<Student>> GetTop5StudentsByGPA()
         {
             return await _context.Student.OrderByDescending(s => s.GPA).Take(7).ToListAsync();
+        }
+
+        public async Task<PipelineStatus> GetPipelineStatusByStudentId(int studentId)
+        {
+            return await _context.PipelineStatus.FirstOrDefaultAsync(s => s.Id == studentId);
+        }
+
+        public async Task<PipelineStatus> UpdatePipelineStatus(int studentId, StudentViewModel studentViewModel)
+        {
+            var existingPipelineStatus = await _context.PipelineStatus.FirstOrDefaultAsync(s => s.Id == studentId);
+
+            if (existingPipelineStatus != null)
+            {
+                existingPipelineStatus.Contact = studentViewModel.contact;
+                existingPipelineStatus.Interview = studentViewModel.interview;
+                existingPipelineStatus.Offered = studentViewModel.offered;
+                existingPipelineStatus.Hired = studentViewModel.hired;
+            }
+            else
+            {
+                PipelineStatus pipelineStatus = new()
+                { 
+                    Id = studentId,
+                    Interview = studentViewModel.interview,
+                    Offered = studentViewModel.offered,
+                    Hired = studentViewModel.hired
+                };
+
+                _context.PipelineStatus.Add(pipelineStatus);
+                existingPipelineStatus = pipelineStatus;
+            }
+
+            await _context.SaveChangesAsync();
+            return existingPipelineStatus;
         }
 
     }

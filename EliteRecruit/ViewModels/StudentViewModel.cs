@@ -31,6 +31,7 @@ namespace EliteRecruit.ViewModels
                 PhoneNumber = student.PhoneNumber;
                 ImagePath = student.ImagePath;
                 Comments = student.Comments;
+                PipelineStatus = student.PipelineStatus;
             }
         }
 
@@ -101,6 +102,13 @@ namespace EliteRecruit.ViewModels
 
         [DisplayName("User")]
         public ApplicationUser CommentEnteredBy { get; set; }
+
+
+        public bool contact { get; set; }
+        public bool interview { get; set; }
+        public bool offered { get; set; }
+        public bool hired { get; set; }
+
         public string FullName
         {
             get { return string.Concat(FirstName, " ", LastName); }
@@ -136,6 +144,7 @@ namespace EliteRecruit.ViewModels
         public IFormFile Image { get; set; }
         public bool ClearImagePath { get; set; }
         public List<Student> Top5Students { get; set; }
+        public virtual PipelineStatus PipelineStatus { get; set; }
     }
 }
 

@@ -10,5 +10,6 @@ namespace EliteRecruit.Data
     {
         public DbSet<Student> Student { get; set; } = default!;
         public DbSet<Comment> Comment { get; set; } = default!;
+        public DbSet<PipelineStatus> PipelineStatus { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using EliteRecruit.Models;
 using EliteRecruit.ViewModels;
 using static EliteRecruit.Helpers.Enums;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EliteRecruit.Interfaces
 {
@@ -18,5 +21,7 @@ namespace EliteRecruit.Interfaces
         Task<Comment> InsertComment(CommentViewModel commentViewModel);
         Task DeleteCommentByID(int commentId);
 
+        Task<PipelineStatus> GetPipelineStatusByStudentId(int studentId);
+        Task<PipelineStatus> UpdatePipelineStatus(int studentId, StudentViewModel studentViewModel);
     }
 }

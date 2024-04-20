@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static EliteRecruit.Helpers.Enums;
 using EliteRecruit.Models.Identity;
+using EliteRecruit.Models;
 
 
 namespace EliteRecruit.Controllers
@@ -52,6 +53,9 @@ namespace EliteRecruit.Controllers
                     SchoolYearString = schoolYearString
                 };
             }
+            var pipelineStatusViewModel = await _studentRepository.GetPipelineStatusByStudentId((int)id);
+            studentViewModel.PipelineStatus = pipelineStatusViewModel;
+
             return View(studentViewModel);
         }
 
@@ -223,7 +227,7 @@ namespace EliteRecruit.Controllers
             {
                 Id = id,
                 CommentText = commentText,
-                StudentId = studentId,
+                StudentId = studentId
             };
 
             return View(commentViewModel);
@@ -241,6 +245,22 @@ namespace EliteRecruit.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePipelineStatus([Bind("Id,PipelineStatus,interview")] StudentViewModel studentViewModel)
+        {
+            if (true)
+            {
+                var studentId = studentViewModel.Id;
+
+                await _studentRepository.UpdatePipelineStatus(studentId,studentViewModel);
+
+                return View("Details", studentViewModel);
+            }
+
+            // If model state is not valid, return the same view with the updated model
+            return View("Details", studentViewModel);
+        }
         private static void MaintainViewState(ref StudentViewModel studentViewModel)
         {
             //return _context.Student.Any(e => e.Id == id);

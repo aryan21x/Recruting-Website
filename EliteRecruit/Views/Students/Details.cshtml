@@ -112,6 +112,30 @@
     @Html.ActionLink("Cancel", "Index", new { SortBy = Model.SortBy, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
 </div>
 
+
+<h4>Pipeline Status</h4>
+<form asp-controller="Students" asp-action="UpdatePipelineStatus" method="post" class="row">
+    <div class="col">
+        <label asp-for="PipelineStatus.Contact"></label>
+        <input asp-for="PipelineStatus.Contact" />
+    </div>
+    <div class="col">
+        <label asp-for="PipelineStatus.Interview"></label>
+        <input asp-for="PipelineStatus.Interview" />
+    </div>
+    <div class="col">
+        <label asp-for="PipelineStatus.Offered"></label>
+        <input asp-for="PipelineStatus.Offered" />
+    </div>
+    <div class="col">
+        <label asp-for="PipelineStatus.Hired"></label>
+        <input asp-for="PipelineStatus.Hired" />
+    </div>
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Update" class="btn btn-primary" />
+</form>
+
+
 <br />
 
 @if (Model.Comments != null && Model.Comments.Any())
