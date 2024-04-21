@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EliteRecruit.Migrations
 {
     [DbContext(typeof(EliteRecruitContext))]
-    [Migration("20240419193304_create")]
+    [Migration("20240420215534_create")]
     partial class create
     {
         /// <inheritdoc />
