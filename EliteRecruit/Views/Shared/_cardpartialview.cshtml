@@ -1,6 +1,18 @@
 ﻿@model EliteRecruit.ViewModels.StudentViewModel
 
 <div class="row">
+    <div class="action-links-container">
+        <div style="display: inline-block;">
+            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName), "Index", new { SortBy = Model.SortByFirstName, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
+        </div>
+        <div style="display: inline-block;">
+            @Html.ActionLink(Html.DisplayNameFor(model => model.LastName), "Index", new { SortBy = Model.SortByLastName, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
+        </div>
+        <div style="display: inline-block;">
+            @Html.ActionLink(Html.DisplayNameFor(model => model.GPA), "Index", new { SortBy = Model.SortByGPA, FilterBy = Model.FilterBy, SchoolYearString = Model.SchoolYearString, majorString = Model.majorString }, new { @class = "btn custom" })
+        </div>
+    </div>
+
     @foreach (var item in Model.Students!)
     {
         <div class="col-md-4 mb-4">
